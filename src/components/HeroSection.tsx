@@ -1,13 +1,25 @@
 import { Button } from "@/components/ui/button";
-import { Tent, Compass, TreePine, Sun, Mountain } from "lucide-react";
+import { Tent, Compass, TreePine, Sun, Mountain, Star } from "lucide-react";
 
 const HeroSection = () => {
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
-    <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden bg-gradient-to-b from-cream to-muted">
+    <section id="hero" className="relative min-h-[90vh] flex items-center justify-center overflow-hidden bg-gradient-to-b from-cream to-muted pt-16">
       {/* Decorative background elements */}
       <div className="absolute inset-0 overflow-hidden">
+        {/* Stars */}
+        <Star className="absolute top-24 left-1/4 w-4 h-4 text-primary/20 animate-wave" style={{ animationDelay: "0s" }} />
+        <Star className="absolute top-32 right-1/3 w-3 h-3 text-accent/30 animate-wave" style={{ animationDelay: "1s" }} />
+        <Star className="absolute top-20 right-1/4 w-5 h-5 text-primary/15 animate-wave" style={{ animationDelay: "2s" }} />
+        
         {/* Sun */}
-        <div className="absolute top-16 right-16 md:right-32">
+        <div className="absolute top-20 right-16 md:right-32">
           <Sun className="w-24 h-24 md:w-32 md:h-32 text-primary/30 animate-wave" />
         </div>
         
@@ -31,7 +43,7 @@ const HeroSection = () => {
           {/* Camp badge */}
           <div className="inline-flex items-center gap-2 px-5 py-2.5 mb-8 rounded-full bg-primary/10 border-2 border-primary/20 animate-fade-in">
             <Tent className="w-5 h-5 text-primary" />
-            <span className="font-semibold text-primary">Creative Camp for Designers</span>
+            <span className="font-semibold text-primary">Your Daily Creative Retreat</span>
           </div>
 
           {/* Main heading */}
@@ -45,11 +57,18 @@ const HeroSection = () => {
 
           {/* Subheadline */}
           <p 
-            className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed animate-fade-in"
+            className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-4 leading-relaxed animate-fade-in"
             style={{ animationDelay: "0.2s" }}
           >
-            Sharpen your skills, try new challenges, and grow with a community of designers.
-            Your creative adventure starts here.
+            Sharpen your UX skills, build your portfolio, and join a global community of designers exploring, creating, and growing together.
+          </p>
+
+          {/* Micro-text */}
+          <p 
+            className="text-sm text-primary/80 font-medium mb-10 animate-fade-in"
+            style={{ animationDelay: "0.25s" }}
+          >
+            Pack your sketchbook. Adventure starts now. 🏕️
           </p>
 
           {/* CTA buttons */}
@@ -57,11 +76,11 @@ const HeroSection = () => {
             className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-in"
             style={{ animationDelay: "0.3s" }}
           >
-            <Button variant="camp" size="xl">
+            <Button variant="camp" size="xl" onClick={() => scrollToSection("challenge")}>
               <Sun className="w-5 h-5" />
               Start Today's Challenge
             </Button>
-            <Button variant="pine" size="lg">
+            <Button variant="pine" size="lg" onClick={() => scrollToSection("projects")}>
               <Compass className="w-5 h-5" />
               Explore Camp Projects
             </Button>
