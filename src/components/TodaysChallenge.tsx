@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { Sun, Clock, Flame, Star, Zap } from "lucide-react";
+import { Sun, Clock, Flame, Star, Zap, History, Upload } from "lucide-react";
 
 const difficulties = [
-  { id: "beginner", label: "Beginner", icon: Star, color: "text-moss" },
-  { id: "intermediate", label: "Intermediate", icon: Flame, color: "text-primary" },
-  { id: "advanced", label: "Advanced", icon: Zap, color: "text-accent" },
+  { id: "beginner", label: "Beginner", icon: Star, color: "text-moss", time: "30-45 min" },
+  { id: "intermediate", label: "Intermediate", icon: Flame, color: "text-primary", time: "1-2 hours" },
+  { id: "advanced", label: "Advanced", icon: Zap, color: "text-accent", time: "2-4 hours" },
 ];
 
 const TodaysChallenge = () => {
@@ -33,8 +33,10 @@ const TodaysChallenge = () => {
     return () => clearInterval(timer);
   }, []);
 
+  const selectedDiff = difficulties.find(d => d.id === selectedDifficulty);
+
   return (
-    <section className="section-padding pine-gradient">
+    <section id="challenge" className="section-padding pine-gradient">
       <div className="container">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-8">
@@ -54,45 +56,61 @@ const TodaysChallenge = () => {
               <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-4">
                 Design a mobile app onboarding flow for a meditation app
               </h3>
-              <p className="text-muted-foreground">
-                Focus on creating a calming, intuitive experience that introduces users to the app's core features
+              <p className="text-muted-foreground max-w-lg mx-auto">
+                Focus on creating a calming, intuitive experience that introduces users to the app's core features while maintaining a peaceful aesthetic.
               </p>
             </div>
 
             {/* Difficulty selector */}
-            <div className="flex flex-wrap justify-center gap-3 mb-8">
-              {difficulties.map((diff) => (
-                <button
-                  key={diff.id}
-                  onClick={() => setSelectedDifficulty(diff.id)}
-                  className={`flex items-center gap-2 px-5 py-3 rounded-full font-semibold transition-all duration-300 ${
-                    selectedDifficulty === diff.id
-                      ? "bg-primary text-primary-foreground shadow-camp"
-                      : "bg-muted text-muted-foreground hover:bg-muted/80"
-                  }`}
-                >
-                  <diff.icon className="w-4 h-4" />
-                  {diff.label}
-                </button>
-              ))}
+            <div className="mb-8">
+              <p className="text-sm text-center text-muted-foreground mb-4">Choose your difficulty:</p>
+              <div className="flex flex-wrap justify-center gap-3">
+                {difficulties.map((diff) => (
+                  <button
+                    key={diff.id}
+                    onClick={() => setSelectedDifficulty(diff.id)}
+                    className={`flex items-center gap-2 px-5 py-3 rounded-full font-semibold transition-all duration-300 ${
+                      selectedDifficulty === diff.id
+                        ? "bg-primary text-primary-foreground shadow-camp"
+                        : "bg-muted text-muted-foreground hover:bg-muted/80"
+                    }`}
+                  >
+                    <diff.icon className="w-4 h-4" />
+                    {diff.label}
+                  </button>
+                ))}
+              </div>
+              {selectedDiff && (
+                <p className="text-center text-sm text-muted-foreground mt-3">
+                  Estimated time: {selectedDiff.time}
+                </p>
+              )}
             </div>
 
             {/* Countdown timer */}
-            <div className="flex items-center justify-center gap-2 mb-8">
-              <Clock className="w-5 h-5 text-muted-foreground" />
-              <span className="text-muted-foreground">Time remaining:</span>
-              <span className="font-mono font-bold text-foreground">
+            <div className="flex items-center justify-center gap-2 mb-8 p-4 bg-muted/50 rounded-xl">
+              <Clock className="w-5 h-5 text-primary" />
+              <span className="text-muted-foreground">Next challenge in:</span>
+              <span className="font-mono font-bold text-foreground text-lg">
                 {String(timeLeft.hours).padStart(2, "0")}:
                 {String(timeLeft.minutes).padStart(2, "0")}:
                 {String(timeLeft.seconds).padStart(2, "0")}
               </span>
             </div>
 
-            {/* CTA */}
-            <div className="text-center">
+            {/* CTAs */}
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button variant="camp" size="xl">
                 <Flame className="w-5 h-5" />
                 Join Today's Challenge
+              </Button>
+              <Button variant="pine" size="lg">
+                <History className="w-5 h-5" />
+                View Past Challenges
+              </Button>
+              <Button variant="outline" size="lg">
+                <Upload className="w-5 h-5" />
+                Submit My Work
               </Button>
             </div>
           </div>

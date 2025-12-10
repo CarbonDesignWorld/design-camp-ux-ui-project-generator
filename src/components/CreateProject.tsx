@@ -1,13 +1,15 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Compass, Sparkles, Laptop, Smartphone, Monitor, Building, ShoppingBag, Heart, Plane } from "lucide-react";
+import { Compass, Sparkles, Laptop, Smartphone, Monitor, Tablet, Clock, Zap, Timer, Calendar } from "lucide-react";
 
-const categories = [
-  { id: "micro", label: "Micro-interaction" },
-  { id: "landing", label: "Landing Page" },
-  { id: "app", label: "Full App" },
-  { id: "dashboard", label: "Dashboard" },
-  { id: "mobile", label: "Mobile UI" },
+const projectTypes = [
+  { id: "ux", label: "UX Design" },
+  { id: "ui", label: "UI Design" },
+  { id: "micro", label: "Microinteraction" },
+  { id: "visual", label: "Visual Design" },
+  { id: "wireframe", label: "Wireframes" },
+  { id: "prototype", label: "Prototyping" },
+  { id: "research", label: "UX Research" },
 ];
 
 const skillLevels = [
@@ -17,60 +19,68 @@ const skillLevels = [
 ];
 
 const platforms = [
-  { id: "web", label: "Web", icon: Monitor },
   { id: "mobile", label: "Mobile", icon: Smartphone },
-  { id: "desktop", label: "Desktop", icon: Laptop },
+  { id: "desktop", label: "Desktop", icon: Monitor },
+  { id: "tablet", label: "Tablet", icon: Tablet },
+  { id: "responsive", label: "Responsive", icon: Laptop },
 ];
 
-const industries = [
-  { id: "tech", label: "Tech", icon: Laptop },
-  { id: "ecommerce", label: "E-commerce", icon: ShoppingBag },
-  { id: "health", label: "Healthcare", icon: Heart },
-  { id: "travel", label: "Travel", icon: Plane },
-  { id: "finance", label: "Finance", icon: Building },
+const durations = [
+  { id: "quickfire", label: "Quick Fire", desc: "5-10 min", icon: Zap },
+  { id: "sprint", label: "Short Sprint", desc: "30-60 min", icon: Timer },
+  { id: "full", label: "Full Project", desc: "2-4 hours", icon: Calendar },
+];
+
+const sampleProjects = [
+  { title: "Fitness App Dashboard", type: "UI Design", duration: "2 hours", level: "Intermediate" },
+  { title: "E-commerce Checkout Flow", type: "UX Design", duration: "3 hours", level: "Advanced" },
+  { title: "Loading Animation", type: "Microinteraction", duration: "15 min", level: "Beginner" },
+  { title: "Recipe App Wireframes", type: "Wireframes", duration: "1 hour", level: "Beginner" },
+  { title: "Banking App Prototype", type: "Prototyping", duration: "4 hours", level: "Advanced" },
+  { title: "Social Media Icons", type: "Visual Design", duration: "30 min", level: "Intermediate" },
 ];
 
 const CreateProject = () => {
-  const [category, setCategory] = useState("landing");
+  const [projectType, setProjectType] = useState("ui");
   const [skill, setSkill] = useState("intermediate");
-  const [platform, setPlatform] = useState("web");
-  const [industry, setIndustry] = useState("tech");
+  const [platform, setPlatform] = useState("mobile");
+  const [duration, setDuration] = useState("sprint");
 
   return (
-    <section className="section-padding bg-background">
+    <section id="projects" className="section-padding bg-background">
       <div className="container">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-10">
             <div className="camp-badge mb-4">
               <Compass className="w-4 h-4" />
-              Project Generator
+              Camp Projects
             </div>
             <h2 className="text-3xl md:text-5xl font-bold text-foreground mt-4">
-              Create Your Camp Project
+              Generate Your Camp Project
             </h2>
             <p className="text-muted-foreground mt-4 max-w-xl mx-auto">
-              Customize your creative adventure with our project generator
+              Create a personalized project based on your goals and available time
             </p>
           </div>
 
-          <div className="camp-card">
-            {/* Category */}
+          <div className="camp-card mb-12">
+            {/* Project Type */}
             <div className="mb-8">
               <label className="block text-sm font-semibold text-foreground mb-3">
-                Project Category
+                Project Type
               </label>
               <div className="flex flex-wrap gap-2">
-                {categories.map((cat) => (
+                {projectTypes.map((type) => (
                   <button
-                    key={cat.id}
-                    onClick={() => setCategory(cat.id)}
+                    key={type.id}
+                    onClick={() => setProjectType(type.id)}
                     className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
-                      category === cat.id
+                      projectType === type.id
                         ? "bg-primary text-primary-foreground shadow-camp"
                         : "bg-muted text-muted-foreground hover:bg-muted/80"
                     }`}
                   >
-                    {cat.label}
+                    {type.label}
                   </button>
                 ))}
               </div>
@@ -121,24 +131,25 @@ const CreateProject = () => {
               </div>
             </div>
 
-            {/* Industry */}
+            {/* Duration */}
             <div className="mb-8">
               <label className="block text-sm font-semibold text-foreground mb-3">
-                Industry
+                Duration
               </label>
-              <div className="flex flex-wrap gap-3">
-                {industries.map((ind) => (
+              <div className="grid grid-cols-3 gap-3">
+                {durations.map((dur) => (
                   <button
-                    key={ind.id}
-                    onClick={() => setIndustry(ind.id)}
-                    className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300 border-2 ${
-                      industry === ind.id
-                        ? "bg-primary/10 border-primary text-primary"
-                        : "bg-card border-border text-muted-foreground hover:border-primary/50"
+                    key={dur.id}
+                    onClick={() => setDuration(dur.id)}
+                    className={`flex flex-col items-center gap-1 p-4 rounded-xl text-sm font-medium transition-all duration-300 border-2 ${
+                      duration === dur.id
+                        ? "bg-primary/10 border-primary"
+                        : "bg-card border-border hover:border-primary/50"
                     }`}
                   >
-                    <ind.icon className="w-4 h-4" />
-                    {ind.label}
+                    <dur.icon className={`w-5 h-5 ${duration === dur.id ? "text-primary" : "text-muted-foreground"}`} />
+                    <span className={duration === dur.id ? "text-primary" : "text-foreground"}>{dur.label}</span>
+                    <span className="text-xs text-muted-foreground">{dur.desc}</span>
                   </button>
                 ))}
               </div>
@@ -150,6 +161,34 @@ const CreateProject = () => {
                 <Sparkles className="w-5 h-5" />
                 Generate a Camp Project
               </Button>
+            </div>
+          </div>
+
+          {/* Sample Projects */}
+          <div>
+            <h3 className="text-xl font-semibold text-foreground text-center mb-6">
+              Sample Project Ideas
+            </h3>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {sampleProjects.map((project) => (
+                <div
+                  key={project.title}
+                  className="bg-card rounded-xl p-5 border border-border hover:border-primary/30 hover:shadow-camp transition-all duration-300"
+                >
+                  <h4 className="font-semibold text-foreground mb-2">{project.title}</h4>
+                  <div className="flex flex-wrap gap-2">
+                    <span className="text-xs bg-primary/10 text-primary px-2 py-1 rounded-full">
+                      {project.type}
+                    </span>
+                    <span className="text-xs bg-muted text-muted-foreground px-2 py-1 rounded-full">
+                      {project.duration}
+                    </span>
+                    <span className="text-xs bg-secondary/30 text-secondary-foreground px-2 py-1 rounded-full">
+                      {project.level}
+                    </span>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </div>

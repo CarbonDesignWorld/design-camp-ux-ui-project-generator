@@ -23,7 +23,7 @@ const steps = [
 
 const HowCampWorks = () => {
   return (
-    <section className="section-padding bg-card">
+    <section id="how-it-works" className="section-padding bg-card">
       <div className="container">
         <div className="text-center mb-12">
           <span className="camp-badge mb-4">How It Works</span>
