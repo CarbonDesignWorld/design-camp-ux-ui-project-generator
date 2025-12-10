@@ -120,7 +120,7 @@ const TodaysChallenge = () => {
 
             {/* CTAs */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button variant="camp" size="xl" onClick={handleJoinChallenge}>
+              <Button variant="camp" size="xl" onClick={() => navigate("/challenge/today")}>
                 <Flame className="w-5 h-5" />
                 Join Today's Challenge
               </Button>
