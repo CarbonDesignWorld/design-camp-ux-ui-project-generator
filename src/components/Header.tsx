@@ -1,9 +1,19 @@
 import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Tent, Menu, X } from "lucide-react";
+import { Tent, Menu, X, LogOut, User } from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { user, signOut } = useAuth();
+  const navigate = useNavigate();
 
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
@@ -11,6 +21,11 @@ const Header = () => {
       element.scrollIntoView({ behavior: "smooth" });
     }
     setMobileMenuOpen(false);
+  };
+
+  const handleSignOut = async () => {
+    await signOut();
+    navigate("/");
   };
 
   return (
@@ -56,12 +71,31 @@ const Header = () => {
 
           {/* Desktop CTAs */}
           <div className="hidden md:flex items-center gap-3">
-            <Button variant="ghost" size="sm">
-              Log In
-            </Button>
-            <Button variant="camp" size="sm">
-              Join Camp
-            </Button>
+            {user ? (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" size="sm" className="gap-2">
+                    <User className="w-4 h-4" />
+                    {user.user_metadata?.name || "Camper"}
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                  <DropdownMenuItem onClick={handleSignOut}>
+                    <LogOut className="w-4 h-4 mr-2" />
+                    Log Out
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ) : (
+              <>
+                <Button variant="ghost" size="sm" asChild>
+                  <Link to="/login">Log In</Link>
+                </Button>
+                <Button variant="camp" size="sm" asChild>
+                  <Link to="/signup">Join Camp</Link>
+                </Button>
+              </>
+            )}
           </div>
 
           {/* Mobile menu button */}
@@ -102,12 +136,21 @@ const Header = () => {
                 How It Works
               </button>
               <div className="flex gap-3 pt-4 border-t border-border">
-                <Button variant="ghost" size="sm" className="flex-1">
-                  Log In
-                </Button>
-                <Button variant="camp" size="sm" className="flex-1">
-                  Join Camp
-                </Button>
+                {user ? (
+                  <Button variant="ghost" size="sm" className="flex-1" onClick={handleSignOut}>
+                    <LogOut className="w-4 h-4 mr-2" />
+                    Log Out
+                  </Button>
+                ) : (
+                  <>
+                    <Button variant="ghost" size="sm" className="flex-1" asChild>
+                      <Link to="/login">Log In</Link>
+                    </Button>
+                    <Button variant="camp" size="sm" className="flex-1" asChild>
+                      <Link to="/signup">Join Camp</Link>
+                    </Button>
+                  </>
+                )}
               </div>
             </nav>
           </div>
