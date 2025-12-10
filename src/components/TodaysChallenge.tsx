@@ -124,7 +124,7 @@ const TodaysChallenge = () => {
                 <Flame className="w-5 h-5" />
                 Join Today's Challenge
               </Button>
-              <Button variant="pine" size="lg">
+              <Button variant="pine" size="lg" onClick={() => navigate("/challenges")}>
                 <History className="w-5 h-5" />
                 View Past Challenges
               </Button>
