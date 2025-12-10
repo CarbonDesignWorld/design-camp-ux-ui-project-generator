@@ -14,6 +14,45 @@ export type Database = {
   }
   public: {
     Tables: {
+      challenges: {
+        Row: {
+          category: string
+          challenge_date: string
+          created_at: string
+          description: string
+          difficulty: string
+          example_outputs: string[] | null
+          full_description: string | null
+          id: string
+          time_estimate: string | null
+          title: string
+        }
+        Insert: {
+          category: string
+          challenge_date: string
+          created_at?: string
+          description: string
+          difficulty: string
+          example_outputs?: string[] | null
+          full_description?: string | null
+          id?: string
+          time_estimate?: string | null
+          title: string
+        }
+        Update: {
+          category?: string
+          challenge_date?: string
+          created_at?: string
+          description?: string
+          difficulty?: string
+          example_outputs?: string[] | null
+          full_description?: string | null
+          id?: string
+          time_estimate?: string | null
+          title?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           created_at: string
@@ -40,6 +79,47 @@ export type Database = {
           user_id?: string
         }
         Relationships: []
+      }
+      submissions: {
+        Row: {
+          challenge_id: string
+          created_at: string
+          external_url: string | null
+          figma_link: string | null
+          id: string
+          image_urls: string[] | null
+          notes: string | null
+          user_id: string
+        }
+        Insert: {
+          challenge_id: string
+          created_at?: string
+          external_url?: string | null
+          figma_link?: string | null
+          id?: string
+          image_urls?: string[] | null
+          notes?: string | null
+          user_id: string
+        }
+        Update: {
+          challenge_id?: string
+          created_at?: string
+          external_url?: string | null
+          figma_link?: string | null
+          id?: string
+          image_urls?: string[] | null
+          notes?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "submissions_challenge_id_fkey"
+            columns: ["challenge_id"]
+            isOneToOne: false
+            referencedRelation: "challenges"
+            referencedColumns: ["id"]
+          },
+        ]
       }
     }
     Views: {

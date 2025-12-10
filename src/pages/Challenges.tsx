@@ -1,9 +1,10 @@
-import { useState, useMemo } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Calendar, Filter, ArrowLeft, Sparkles, Zap, Flame } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Skeleton } from "@/components/ui/skeleton";
 import {
   Select,
   SelectContent,
@@ -11,9 +12,18 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { pastChallenges, Challenge } from "@/data/challenges";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { supabase } from "@/integrations/supabase/client";
+
+interface Challenge {
+  id: string;
+  title: string;
+  description: string;
+  difficulty: "Beginner" | "Intermediate" | "Advanced";
+  category: string;
+  challenge_date: string;
+}
 
 const difficultyConfig = {
   Beginner: { icon: Sparkles, color: "bg-success/10 text-success border-success/20" },
@@ -28,53 +38,76 @@ const ChallengeCard = ({ challenge }: { challenge: Challenge }) => {
   const { icon: DiffIcon, color } = difficultyConfig[challenge.difficulty];
   
   return (
-    <Card className="group hover:shadow-medium transition-all duration-300 hover:-translate-y-1">
-      <CardHeader className="pb-3">
-        <div className="flex items-center justify-between mb-2">
-          <Badge variant="outline" className={`${color} font-medium`}>
-            <DiffIcon className="w-3 h-3 mr-1" />
-            {challenge.difficulty}
+    <Link to={`/challenge/${challenge.id}`}>
+      <Card className="group hover:shadow-medium transition-all duration-300 hover:-translate-y-1 h-full">
+        <CardHeader className="pb-3">
+          <div className="flex items-center justify-between mb-2">
+            <Badge variant="outline" className={`${color} font-medium`}>
+              <DiffIcon className="w-3 h-3 mr-1" />
+              {challenge.difficulty}
+            </Badge>
+            <span className="text-sm text-muted-foreground flex items-center gap-1">
+              <Calendar className="w-3 h-3" />
+              {new Date(challenge.challenge_date).toLocaleDateString('en-US', { 
+                month: 'short', 
+                day: 'numeric',
+                year: 'numeric'
+              })}
+            </span>
+          </div>
+          <h3 className="font-display font-bold text-lg text-foreground group-hover:text-primary transition-colors">
+            {challenge.title}
+          </h3>
+        </CardHeader>
+        <CardContent className="pb-4">
+          <p className="text-muted-foreground text-sm leading-relaxed">
+            {challenge.description}
+          </p>
+          <Badge variant="secondary" className="mt-3 bg-secondary/20 text-secondary-foreground">
+            {challenge.category}
           </Badge>
-          <span className="text-sm text-muted-foreground flex items-center gap-1">
-            <Calendar className="w-3 h-3" />
-            {new Date(challenge.date).toLocaleDateString('en-US', { 
-              month: 'short', 
-              day: 'numeric',
-              year: 'numeric'
-            })}
-          </span>
-        </div>
-        <h3 className="font-display font-bold text-lg text-foreground group-hover:text-primary transition-colors">
-          {challenge.title}
-        </h3>
-      </CardHeader>
-      <CardContent className="pb-4">
-        <p className="text-muted-foreground text-sm leading-relaxed">
-          {challenge.description}
-        </p>
-        <Badge variant="secondary" className="mt-3 bg-secondary/20 text-secondary-foreground">
-          {challenge.category}
-        </Badge>
-      </CardContent>
-      <CardFooter>
-        <Button variant="outline" className="w-full group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
-          View Challenge
-        </Button>
-      </CardFooter>
-    </Card>
+        </CardContent>
+        <CardFooter>
+          <Button variant="outline" className="w-full group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
+            View Challenge
+          </Button>
+        </CardFooter>
+      </Card>
+    </Link>
   );
 };
 
 const Challenges = () => {
+  const [challenges, setChallenges] = useState<Challenge[]>([]);
+  const [loading, setLoading] = useState(true);
   const [difficultyFilter, setDifficultyFilter] = useState<string>('All');
   const [categoryFilter, setCategoryFilter] = useState<string>('All');
 
-  const filteredChallenges = useMemo(() => {
-    return pastChallenges.filter((challenge) => {
-      const matchesDifficulty = difficultyFilter === 'All' || challenge.difficulty === difficultyFilter;
-      const matchesCategory = categoryFilter === 'All' || challenge.category === categoryFilter;
-      return matchesDifficulty && matchesCategory;
-    });
+  useEffect(() => {
+    const fetchChallenges = async () => {
+      let query = supabase
+        .from("challenges")
+        .select("id, title, description, difficulty, category, challenge_date")
+        .order("challenge_date", { ascending: false });
+
+      if (difficultyFilter !== 'All') {
+        query = query.eq("difficulty", difficultyFilter);
+      }
+      if (categoryFilter !== 'All') {
+        query = query.eq("category", categoryFilter);
+      }
+
+      const { data, error } = await query;
+
+      if (error) {
+        console.error("Error fetching challenges:", error);
+      } else {
+        setChallenges(data as Challenge[]);
+      }
+      setLoading(false);
+    };
+
+    fetchChallenges();
   }, [difficultyFilter, categoryFilter]);
 
   return (
@@ -148,13 +181,27 @@ const Challenges = () => {
 
         {/* Results Count */}
         <p className="text-sm text-muted-foreground mb-6">
-          Showing {filteredChallenges.length} challenge{filteredChallenges.length !== 1 ? 's' : ''}
+          {loading ? "Loading..." : `Showing ${challenges.length} challenge${challenges.length !== 1 ? 's' : ''}`}
         </p>
 
         {/* Challenge Grid */}
-        {filteredChallenges.length > 0 ? (
+        {loading ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredChallenges.map((challenge) => (
+            {[...Array(6)].map((_, i) => (
+              <Card key={i} className="h-64">
+                <CardHeader>
+                  <Skeleton className="h-6 w-24 mb-2" />
+                  <Skeleton className="h-6 w-full" />
+                </CardHeader>
+                <CardContent>
+                  <Skeleton className="h-16 w-full" />
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        ) : challenges.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {challenges.map((challenge) => (
               <ChallengeCard key={challenge.id} challenge={challenge} />
             ))}
           </div>
