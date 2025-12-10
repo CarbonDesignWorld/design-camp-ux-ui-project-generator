@@ -80,10 +80,10 @@ const Signup = () => {
         </Link>
         
         {/* Card */}
-        <div className="bg-card rounded-3xl p-8 shadow-camp-lg border border-border">
+        <div className="bg-card rounded-2xl p-8 shadow-medium border border-border">
           {/* Logo */}
           <div className="text-center mb-8">
-            <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/20 mb-4">
+            <div className="inline-flex items-center justify-center w-16 h-16 rounded-xl bg-secondary/20 mb-4">
               <Tent className="w-8 h-8 text-primary" />
             </div>
             <h1 className="text-2xl font-bold font-handwritten text-foreground">Join Design Camp!</h1>

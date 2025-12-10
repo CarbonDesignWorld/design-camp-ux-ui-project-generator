@@ -31,15 +31,25 @@ export default {
         foreground: "hsl(var(--foreground))",
         primary: {
           DEFAULT: "hsl(var(--primary))",
+          light: "hsl(var(--primary-light))",
           foreground: "hsl(var(--primary-foreground))",
         },
         secondary: {
           DEFAULT: "hsl(var(--secondary))",
+          dark: "hsl(var(--secondary-dark))",
           foreground: "hsl(var(--secondary-foreground))",
         },
         destructive: {
           DEFAULT: "hsl(var(--destructive))",
           foreground: "hsl(var(--destructive-foreground))",
+        },
+        success: {
+          DEFAULT: "hsl(var(--success))",
+          foreground: "hsl(var(--success-foreground))",
+        },
+        info: {
+          DEFAULT: "hsl(var(--info))",
+          foreground: "hsl(var(--info-foreground))",
         },
         muted: {
           DEFAULT: "hsl(var(--muted))",
@@ -67,20 +77,35 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
-        campfire: "hsl(var(--campfire))",
-        pine: "hsl(var(--pine))",
-        sky: "hsl(var(--sky))",
+        // Camp brand colors
+        pine: {
+          DEFAULT: "hsl(var(--pine))",
+          light: "hsl(var(--pine-light))",
+        },
+        golden: {
+          DEFAULT: "hsl(var(--golden))",
+          dark: "hsl(var(--golden-dark))",
+        },
         cream: "hsl(var(--cream))",
-        wood: "hsl(var(--wood))",
-        sunset: "hsl(var(--sunset))",
+        "surface-alt": "hsl(var(--surface-alt))",
         moss: "hsl(var(--moss))",
+        campfire: "hsl(var(--campfire))",
+        sky: "hsl(var(--sky))",
       },
       borderRadius: {
-        lg: "var(--radius)",
-        md: "calc(var(--radius) - 2px)",
-        sm: "calc(var(--radius) - 4px)",
-        "2xl": "1.5rem",
-        "3xl": "2rem",
+        xs: "var(--radius-xs)",
+        sm: "var(--radius-sm)",
+        md: "var(--radius-md)",
+        lg: "var(--radius-lg)",
+        xl: "var(--radius-xl)",
+        "2xl": "calc(var(--radius-xl) + 4px)",
+        "3xl": "calc(var(--radius-xl) + 12px)",
+      },
+      boxShadow: {
+        soft: "var(--shadow-soft)",
+        medium: "var(--shadow-medium)",
+        camp: "var(--shadow-soft)",
+        "camp-lg": "var(--shadow-lg)",
       },
       keyframes: {
         "accordion-down": {
