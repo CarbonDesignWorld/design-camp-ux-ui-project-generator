@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Users, Flame, Star, Award, Heart, MessageCircle } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const submissions = [
   {
@@ -133,10 +134,12 @@ const CampfireCommunity = () => {
 
         {/* CTA */}
         <div className="text-center">
-          <Button variant="camp" size="xl">
-            <Users className="w-5 h-5" />
-            Join the Campfire Chat
-          </Button>
+          <Link to="/community">
+            <Button variant="camp" size="xl">
+              <Users className="w-5 h-5" />
+              Join the Campfire Chat
+            </Button>
+          </Link>
         </div>
       </div>
     </section>
