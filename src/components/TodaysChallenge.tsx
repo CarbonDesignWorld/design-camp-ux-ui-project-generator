@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Sun, Clock, Flame, Star, Zap, History, Upload } from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
 
 const difficulties = [
   { id: "beginner", label: "Beginner", icon: Star, color: "text-moss", time: "30-45 min" },
@@ -11,6 +13,8 @@ const difficulties = [
 const TodaysChallenge = () => {
   const [selectedDifficulty, setSelectedDifficulty] = useState("intermediate");
   const [timeLeft, setTimeLeft] = useState({ hours: 0, minutes: 0, seconds: 0 });
+  const { user } = useAuth();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const calculateTimeLeft = () => {
@@ -34,6 +38,22 @@ const TodaysChallenge = () => {
   }, []);
 
   const selectedDiff = difficulties.find(d => d.id === selectedDifficulty);
+
+  const handleJoinChallenge = () => {
+    if (!user) {
+      navigate("/signup", { state: { from: "/" } });
+    } else {
+      // TODO: Handle join challenge for logged-in users
+    }
+  };
+
+  const handleSubmitWork = () => {
+    if (!user) {
+      navigate("/login", { state: { from: "/" } });
+    } else {
+      // TODO: Handle submit work for logged-in users
+    }
+  };
 
   return (
     <section id="challenge" className="section-padding pine-gradient">
@@ -100,7 +120,7 @@ const TodaysChallenge = () => {
 
             {/* CTAs */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button variant="camp" size="xl">
+              <Button variant="camp" size="xl" onClick={handleJoinChallenge}>
                 <Flame className="w-5 h-5" />
                 Join Today's Challenge
               </Button>
@@ -108,7 +128,7 @@ const TodaysChallenge = () => {
                 <History className="w-5 h-5" />
                 View Past Challenges
               </Button>
-              <Button variant="outline" size="lg">
+              <Button variant="outline" size="lg" onClick={handleSubmitWork}>
                 <Upload className="w-5 h-5" />
                 Submit My Work
               </Button>
