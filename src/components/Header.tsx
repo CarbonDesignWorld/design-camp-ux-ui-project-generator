@@ -33,13 +33,13 @@ const Header = () => {
       <div className="container">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <button 
-            onClick={() => scrollToSection("hero")}
+          <Link 
+            to="/"
             className="flex items-center gap-2 hover:opacity-80 transition-opacity"
           >
             <Tent className="w-7 h-7 text-primary" />
             <span className="text-xl font-bold font-handwritten text-foreground">Design Camp</span>
-          </button>
+          </Link>
 
           {/* Desktop Nav */}
           <nav className="hidden md:flex items-center gap-8">
