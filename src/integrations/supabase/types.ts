@@ -74,6 +74,27 @@ export type Database = {
         }
         Relationships: []
       }
+      newsletter_signups: {
+        Row: {
+          challenge_reminders: boolean
+          created_at: string
+          email: string
+          id: string
+        }
+        Insert: {
+          challenge_reminders?: boolean
+          created_at?: string
+          email: string
+          id?: string
+        }
+        Update: {
+          challenge_reminders?: boolean
+          created_at?: string
+          email?: string
+          id?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           created_at: string
