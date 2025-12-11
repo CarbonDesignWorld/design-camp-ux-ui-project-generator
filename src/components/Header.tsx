@@ -43,12 +43,12 @@ const Header = () => {
 
           {/* Desktop Nav */}
           <nav className="hidden md:flex items-center gap-8">
-            <button 
-              onClick={() => scrollToSection("challenge")}
+            <Link 
+              to="/challenges/today"
               className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
             >
               Today's Challenge
-            </button>
+            </Link>
             <Link 
               to="/projects"
               className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
@@ -111,12 +111,13 @@ const Header = () => {
         {mobileMenuOpen && (
           <div className="md:hidden py-4 border-t border-border animate-fade-in">
             <nav className="flex flex-col gap-4">
-              <button 
-                onClick={() => scrollToSection("challenge")}
+              <Link 
+                to="/challenges/today"
                 className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors text-left"
+                onClick={() => setMobileMenuOpen(false)}
               >
                 Today's Challenge
-              </button>
+              </Link>
               <Link 
                 to="/projects"
                 className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors text-left"
