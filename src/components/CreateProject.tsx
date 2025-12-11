@@ -40,17 +40,11 @@ const CreateProject = () => {
               Use our project generator to get a customized project prompt with deliverables, 
               tools, and creative constraints.
             </p>
-            <div className="flex flex-col sm:flex-row gap-3 justify-center">
+            <div className="flex justify-center">
               <Link to="/projects">
                 <Button variant="camp" size="xl">
                   <Sparkles className="w-5 h-5" />
                   Generate a Camp Project
-                </Button>
-              </Link>
-              <Link to="/projects">
-                <Button variant="outline" size="lg" className="gap-2">
-                  Explore Camp Projects
-                  <ArrowRight className="w-4 h-4" />
                 </Button>
               </Link>
             </div>
