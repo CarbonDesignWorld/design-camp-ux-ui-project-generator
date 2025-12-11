@@ -187,6 +187,39 @@ export type Database = {
           },
         ]
       }
+      user_preferences: {
+        Row: {
+          created_at: string
+          goals: string[]
+          id: string
+          preferred_tools: string[]
+          skill_level: string
+          updated_at: string
+          user_id: string
+          weekly_hours: number
+        }
+        Insert: {
+          created_at?: string
+          goals: string[]
+          id?: string
+          preferred_tools: string[]
+          skill_level: string
+          updated_at?: string
+          user_id: string
+          weekly_hours: number
+        }
+        Update: {
+          created_at?: string
+          goals?: string[]
+          id?: string
+          preferred_tools?: string[]
+          skill_level?: string
+          updated_at?: string
+          user_id?: string
+          weekly_hours?: number
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

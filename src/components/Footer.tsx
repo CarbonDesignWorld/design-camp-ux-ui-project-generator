@@ -70,6 +70,7 @@ const Footer = () => {
             <ul className="space-y-3">
               <li><Link to="/challenges" className="text-secondary-foreground/80 hover:text-primary transition-colors">Daily Challenge</Link></li>
               <li><Link to="/projects" className="text-secondary-foreground/80 hover:text-primary transition-colors">Project Generator</Link></li>
+              <li><Link to="/camp-track" className="text-secondary-foreground/80 hover:text-primary transition-colors">Camp Track</Link></li>
               <li><Link to="/community" className="text-secondary-foreground/80 hover:text-primary transition-colors">Community</Link></li>
               <li><Link to="/leaderboard" className="text-secondary-foreground/80 hover:text-primary transition-colors">Leaderboard</Link></li>
             </ul>
