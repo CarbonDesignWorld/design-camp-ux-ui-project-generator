@@ -147,7 +147,18 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      get_leaderboard: {
+        Args: { time_filter?: string }
+        Returns: {
+          name: string
+          profile_image: string
+          rank: number
+          streak_days: number
+          submission_count: number
+          total_points: number
+          user_id: string
+        }[]
+      }
     }
     Enums: {
       [_ in never]: never

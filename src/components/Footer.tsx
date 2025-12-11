@@ -1,6 +1,7 @@
 import { Tent, Twitter, Instagram, Linkedin, Github, Mail, Send } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   const [email, setEmail] = useState("");
@@ -69,8 +70,8 @@ const Footer = () => {
             <ul className="space-y-3">
               <li><a href="#challenge" className="text-secondary-foreground/80 hover:text-primary transition-colors">Daily Challenge</a></li>
               <li><a href="#projects" className="text-secondary-foreground/80 hover:text-primary transition-colors">Project Generator</a></li>
-              <li><a href="#community" className="text-secondary-foreground/80 hover:text-primary transition-colors">Community</a></li>
-              <li><a href="#" className="text-secondary-foreground/80 hover:text-primary transition-colors">Leaderboard</a></li>
+              <li><Link to="/community" className="text-secondary-foreground/80 hover:text-primary transition-colors">Community</Link></li>
+              <li><Link to="/leaderboard" className="text-secondary-foreground/80 hover:text-primary transition-colors">Leaderboard</Link></li>
             </ul>
           </div>
 
