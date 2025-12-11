@@ -68,8 +68,8 @@ const Footer = () => {
           <div>
             <h4 className="font-semibold mb-4">Camp</h4>
             <ul className="space-y-3">
-              <li><a href="#challenge" className="text-secondary-foreground/80 hover:text-primary transition-colors">Daily Challenge</a></li>
-              <li><a href="#projects" className="text-secondary-foreground/80 hover:text-primary transition-colors">Project Generator</a></li>
+              <li><Link to="/challenges" className="text-secondary-foreground/80 hover:text-primary transition-colors">Daily Challenge</Link></li>
+              <li><Link to="/projects" className="text-secondary-foreground/80 hover:text-primary transition-colors">Project Generator</Link></li>
               <li><Link to="/community" className="text-secondary-foreground/80 hover:text-primary transition-colors">Community</Link></li>
               <li><Link to="/leaderboard" className="text-secondary-foreground/80 hover:text-primary transition-colors">Leaderboard</Link></li>
             </ul>

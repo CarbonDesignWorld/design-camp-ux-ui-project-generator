@@ -101,6 +101,51 @@ export type Database = {
         }
         Relationships: []
       }
+      project_templates: {
+        Row: {
+          created_at: string
+          deliverables: string[]
+          description: string
+          duration: string
+          example_challenges: string[]
+          id: string
+          platform: string
+          project_type: string
+          skill_level: string
+          time_estimate: string
+          title: string
+          tools_recommended: string[]
+        }
+        Insert: {
+          created_at?: string
+          deliverables: string[]
+          description: string
+          duration: string
+          example_challenges: string[]
+          id?: string
+          platform: string
+          project_type: string
+          skill_level: string
+          time_estimate: string
+          title: string
+          tools_recommended: string[]
+        }
+        Update: {
+          created_at?: string
+          deliverables?: string[]
+          description?: string
+          duration?: string
+          example_challenges?: string[]
+          id?: string
+          platform?: string
+          project_type?: string
+          skill_level?: string
+          time_estimate?: string
+          title?: string
+          tools_recommended?: string[]
+        }
+        Relationships: []
+      }
       submissions: {
         Row: {
           challenge_id: string

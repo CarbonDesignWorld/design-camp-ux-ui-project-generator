@@ -49,12 +49,12 @@ const Header = () => {
             >
               Today's Challenge
             </button>
-            <button 
-              onClick={() => scrollToSection("projects")}
+            <Link 
+              to="/projects"
               className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
             >
               Projects
-            </button>
+            </Link>
             <Link 
               to="/community"
               className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
@@ -117,12 +117,13 @@ const Header = () => {
               >
                 Today's Challenge
               </button>
-              <button 
-                onClick={() => scrollToSection("projects")}
+              <Link 
+                to="/projects"
                 className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors text-left"
+                onClick={() => setMobileMenuOpen(false)}
               >
                 Projects
-              </button>
+              </Link>
               <Link 
                 to="/community"
                 className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors text-left"
