@@ -55,18 +55,18 @@ const Header = () => {
             >
               Projects
             </button>
-            <button 
-              onClick={() => scrollToSection("community")}
+            <Link 
+              to="/community"
               className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
             >
               Community
-            </button>
-            <button 
-              onClick={() => scrollToSection("how-it-works")}
+            </Link>
+            <Link 
+              to="/leaderboard"
               className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
             >
-              How It Works
-            </button>
+              Leaderboard
+            </Link>
           </nav>
 
           {/* Desktop CTAs */}
@@ -123,18 +123,20 @@ const Header = () => {
               >
                 Projects
               </button>
-              <button 
-                onClick={() => scrollToSection("community")}
+              <Link 
+                to="/community"
                 className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors text-left"
+                onClick={() => setMobileMenuOpen(false)}
               >
                 Community
-              </button>
-              <button 
-                onClick={() => scrollToSection("how-it-works")}
+              </Link>
+              <Link 
+                to="/leaderboard"
                 className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors text-left"
+                onClick={() => setMobileMenuOpen(false)}
               >
-                How It Works
-              </button>
+                Leaderboard
+              </Link>
               <div className="flex gap-3 pt-4 border-t border-border">
                 {user ? (
                   <Button variant="ghost" size="sm" className="flex-1" onClick={handleSignOut}>
