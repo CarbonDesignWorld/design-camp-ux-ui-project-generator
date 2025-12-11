@@ -21,6 +21,7 @@ import Footer from "@/components/Footer";
 import SubmissionForm from "@/components/SubmissionForm";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
+import { useTodaysChallenge, TodaysChallenge as TodaysChallengeType } from "@/hooks/useTodaysChallenge";
 
 interface Challenge {
   id: string;
@@ -98,10 +99,9 @@ const ChallengeCard = ({ challenge }: { challenge: Challenge }) => {
 const TodayChallenges = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
-  const [todayChallenge, setTodayChallenge] = useState<Challenge | null>(null);
+  const { challenge: todayChallenge, loading: loadingToday } = useTodaysChallenge();
   const [pastChallenges, setPastChallenges] = useState<Challenge[]>([]);
   const [userSubmission, setUserSubmission] = useState<Submission | null>(null);
-  const [loadingToday, setLoadingToday] = useState(true);
   const [loadingPast, setLoadingPast] = useState(true);
   const [showSubmitForm, setShowSubmitForm] = useState(false);
   const [difficultyFilter, setDifficultyFilter] = useState<string>('All');
@@ -128,28 +128,6 @@ const TodayChallenges = () => {
     setTimeLeft(calculateTimeLeft());
     const timer = setInterval(() => setTimeLeft(calculateTimeLeft()), 1000);
     return () => clearInterval(timer);
-  }, []);
-
-  // Fetch today's challenge
-  useEffect(() => {
-    const fetchTodayChallenge = async () => {
-      const today = new Date().toISOString().split('T')[0];
-      
-      const { data, error } = await supabase
-        .from("challenges")
-        .select("*")
-        .eq("challenge_date", today)
-        .maybeSingle();
-
-      if (error) {
-        console.error("Error fetching today's challenge:", error);
-      } else if (data) {
-        setTodayChallenge(data as Challenge);
-      }
-      setLoadingToday(false);
-    };
-
-    fetchTodayChallenge();
   }, []);
 
   // Fetch user's submission for today's challenge

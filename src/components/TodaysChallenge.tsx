@@ -2,19 +2,21 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Sun, Clock, Flame, Star, Zap, History, Upload } from "lucide-react";
+import { Skeleton } from "@/components/ui/skeleton";
 import { useAuth } from "@/hooks/useAuth";
+import { useTodaysChallenge } from "@/hooks/useTodaysChallenge";
 
 const difficulties = [
-  { id: "beginner", label: "Beginner", icon: Star, color: "text-moss", time: "30-45 min" },
-  { id: "intermediate", label: "Intermediate", icon: Flame, color: "text-primary", time: "1-2 hours" },
-  { id: "advanced", label: "Advanced", icon: Zap, color: "text-accent", time: "2-4 hours" },
+  { id: "Beginner", label: "Beginner", icon: Star, color: "text-moss", time: "30-45 min" },
+  { id: "Intermediate", label: "Intermediate", icon: Flame, color: "text-primary", time: "1-2 hours" },
+  { id: "Advanced", label: "Advanced", icon: Zap, color: "text-accent", time: "2-4 hours" },
 ];
 
 const TodaysChallenge = () => {
-  const [selectedDifficulty, setSelectedDifficulty] = useState("intermediate");
   const [timeLeft, setTimeLeft] = useState({ hours: 0, minutes: 0, seconds: 0 });
   const { user } = useAuth();
   const navigate = useNavigate();
+  const { challenge, loading } = useTodaysChallenge();
 
   useEffect(() => {
     const calculateTimeLeft = () => {
@@ -37,23 +39,15 @@ const TodaysChallenge = () => {
     return () => clearInterval(timer);
   }, []);
 
-  const selectedDiff = difficulties.find(d => d.id === selectedDifficulty);
-
-  const handleJoinChallenge = () => {
-    if (!user) {
-      navigate("/signup", { state: { from: "/" } });
-    } else {
-      // TODO: Handle join challenge for logged-in users
-    }
-  };
-
   const handleSubmitWork = () => {
     if (!user) {
       navigate("/login", { state: { from: "/" } });
     } else {
-      // TODO: Handle submit work for logged-in users
+      navigate("/challenges/today");
     }
   };
+
+  const selectedDiff = challenge ? difficulties.find(d => d.id === challenge.difficulty) : null;
 
   return (
     <section id="challenge" className="section-padding pine-gradient">
@@ -70,42 +64,60 @@ const TodaysChallenge = () => {
           </div>
 
           <div className="bg-card/95 backdrop-blur rounded-3xl p-8 md:p-12 shadow-camp-lg">
-            {/* Challenge prompt */}
-            <div className="text-center mb-8">
-              <p className="text-sm text-muted-foreground mb-2">December 10, 2024</p>
-              <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-4">
-                Design a mobile app onboarding flow for a meditation app
-              </h3>
-              <p className="text-muted-foreground max-w-lg mx-auto">
-                Focus on creating a calming, intuitive experience that introduces users to the app's core features while maintaining a peaceful aesthetic.
-              </p>
-            </div>
-
-            {/* Difficulty selector */}
-            <div className="mb-8">
-              <p className="text-sm text-center text-muted-foreground mb-4">Choose your difficulty:</p>
-              <div className="flex flex-wrap justify-center gap-3">
-                {difficulties.map((diff) => (
-                  <button
-                    key={diff.id}
-                    onClick={() => setSelectedDifficulty(diff.id)}
-                    className={`flex items-center gap-2 px-5 py-3 rounded-full font-semibold transition-all duration-300 ${
-                      selectedDifficulty === diff.id
-                        ? "bg-primary text-primary-foreground shadow-camp"
-                        : "bg-muted text-muted-foreground hover:bg-muted/80"
-                    }`}
-                  >
-                    <diff.icon className="w-4 h-4" />
-                    {diff.label}
-                  </button>
-                ))}
+            {loading ? (
+              <div className="space-y-4">
+                <Skeleton className="h-6 w-32 mx-auto" />
+                <Skeleton className="h-10 w-3/4 mx-auto" />
+                <Skeleton className="h-20 w-full" />
               </div>
-              {selectedDiff && (
-                <p className="text-center text-sm text-muted-foreground mt-3">
-                  Estimated time: {selectedDiff.time}
-                </p>
-              )}
-            </div>
+            ) : challenge ? (
+              <>
+                {/* Challenge prompt */}
+                <div className="text-center mb-8">
+                  <p className="text-sm text-muted-foreground mb-2">
+                    {new Date(challenge.challenge_date).toLocaleDateString('en-US', {
+                      month: 'long',
+                      day: 'numeric',
+                      year: 'numeric'
+                    })}
+                  </p>
+                  <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-4">
+                    {challenge.title}
+                  </h3>
+                  <p className="text-muted-foreground max-w-lg mx-auto">
+                    {challenge.description}
+                  </p>
+                </div>
+
+                {/* Difficulty display */}
+                <div className="mb-8">
+                  <div className="flex flex-wrap justify-center gap-3">
+                    {difficulties.map((diff) => (
+                      <div
+                        key={diff.id}
+                        className={`flex items-center gap-2 px-5 py-3 rounded-full font-semibold transition-all duration-300 ${
+                          challenge.difficulty === diff.id
+                            ? "bg-primary text-primary-foreground shadow-camp"
+                            : "bg-muted text-muted-foreground"
+                        }`}
+                      >
+                        <diff.icon className="w-4 h-4" />
+                        {diff.label}
+                      </div>
+                    ))}
+                  </div>
+                  {selectedDiff && (
+                    <p className="text-center text-sm text-muted-foreground mt-3">
+                      Estimated time: {challenge.time_estimate || selectedDiff.time}
+                    </p>
+                  )}
+                </div>
+              </>
+            ) : (
+              <div className="text-center py-8">
+                <p className="text-muted-foreground">No challenge available for today. Check back soon!</p>
+              </div>
+            )}
 
             {/* Countdown timer */}
             <div className="flex items-center justify-center gap-2 mb-8 p-4 bg-muted/50 rounded-xl">
@@ -120,7 +132,7 @@ const TodaysChallenge = () => {
 
             {/* CTAs */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button variant="camp" size="xl" onClick={() => navigate("/challenge/today")}>
+              <Button variant="camp" size="xl" onClick={() => navigate("/challenges/today")}>
                 <Flame className="w-5 h-5" />
                 Join Today's Challenge
               </Button>
