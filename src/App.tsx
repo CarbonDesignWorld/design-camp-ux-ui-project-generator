@@ -14,6 +14,7 @@ import ChallengeDetail from "./pages/ChallengeDetail";
 import Community from "./pages/Community";
 import Leaderboard from "./pages/Leaderboard";
 import Projects from "./pages/Projects";
+import CampTrack from "./pages/CampTrack";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -35,6 +36,7 @@ const App = () => (
               <Route path="/community" element={<Community />} />
               <Route path="/leaderboard" element={<Leaderboard />} />
               <Route path="/projects" element={<Projects />} />
+              <Route path="/camp-track" element={<CampTrack />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>

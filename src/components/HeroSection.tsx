@@ -1,5 +1,6 @@
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Tent, Compass, TreePine, Sun, Mountain, Star } from "lucide-react";
+import { Tent, Compass, TreePine, Sun, Mountain, Star, Map } from "lucide-react";
 
 const HeroSection = () => {
   const scrollToSection = (sectionId: string) => {
@@ -80,10 +81,12 @@ const HeroSection = () => {
               <Sun className="w-5 h-5" />
               Start Today's Challenge
             </Button>
-            <Button variant="pine" size="lg" onClick={() => scrollToSection("projects")}>
-              <Compass className="w-5 h-5" />
-              Explore Camp Projects
-            </Button>
+            <Link to="/camp-track">
+              <Button variant="pine" size="lg">
+                <Map className="w-5 h-5" />
+                Customize My Camp Track
+              </Button>
+            </Link>
           </div>
 
           {/* Stats */}
