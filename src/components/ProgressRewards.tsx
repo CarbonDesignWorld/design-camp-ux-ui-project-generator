@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Trophy, Flame, Star, Mountain, TreePine, Compass } from "lucide-react";
 
@@ -121,9 +122,11 @@ const ProgressRewards = () => {
 
         {/* CTA */}
         <div className="text-center">
-          <Button variant="camp" size="xl">
-            <Trophy className="w-5 h-5" />
-            Join Camp
+          <Button variant="camp" size="xl" asChild>
+            <Link to="/signup">
+              <Trophy className="w-5 h-5" />
+              Join Camp
+            </Link>
           </Button>
           <p className="text-secondary-foreground/60 text-sm mt-3">
             Start earning XP with your first challenge
