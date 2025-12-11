@@ -13,6 +13,7 @@ import Challenges from "./pages/Challenges";
 import ChallengeDetail from "./pages/ChallengeDetail";
 import Community from "./pages/Community";
 import Leaderboard from "./pages/Leaderboard";
+import Projects from "./pages/Projects";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -33,6 +34,7 @@ const App = () => (
               <Route path="/challenge/:id" element={<ChallengeDetail />} />
               <Route path="/community" element={<Community />} />
               <Route path="/leaderboard" element={<Leaderboard />} />
+              <Route path="/projects" element={<Projects />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
