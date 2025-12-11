@@ -1,1 +1,7 @@
 project_id = "vvyefbpjeeighdwwmccl"
+
+[functions.generate-challenge]
+verify_jwt = false
+
+[functions.generate-project]
+verify_jwt = false

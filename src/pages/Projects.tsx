@@ -39,6 +39,7 @@ interface ProjectTemplate {
   project_type: string;
   platform: string;
   duration: string;
+  market_relevance?: string;
 }
 
 const skillLevels = [
@@ -97,42 +98,48 @@ const Projects = () => {
   const generateProject = async () => {
     setIsLoading(true);
     try {
-      let query = supabase.from("project_templates").select("*");
-
-      if (skillLevel !== "all") {
-        query = query.eq("skill_level", skillLevel);
-      }
-      if (projectType !== "all") {
-        query = query.eq("project_type", projectType);
-      }
-      if (platform !== "all") {
-        query = query.eq("platform", platform);
-      }
-      if (duration !== "all") {
-        query = query.eq("duration", duration);
-      }
-
-      const { data, error } = await query;
+      // Call AI to generate a unique project
+      const { data, error } = await supabase.functions.invoke('generate-project', {
+        body: {
+          skillLevel: skillLevel !== "all" ? skillLevel : undefined,
+          projectType: projectType !== "all" ? projectType : undefined,
+          platform: platform !== "all" ? platform : undefined,
+          duration: duration !== "all" ? duration : undefined,
+        }
+      });
 
       if (error) throw error;
 
-      if (!data || data.length === 0) {
+      if (data?.error) {
         toast({
-          title: "No projects found",
-          description: "Try adjusting your filters to find matching projects.",
+          title: "Generation Error",
+          description: data.error,
           variant: "destructive",
         });
-        setGeneratedProject(null);
         return;
       }
 
-      // Randomly select one project
-      const randomIndex = Math.floor(Math.random() * data.length);
-      setGeneratedProject(data[randomIndex] as ProjectTemplate);
+      // Map AI response to our interface
+      const project: ProjectTemplate = {
+        id: data.id,
+        title: data.title,
+        description: data.description,
+        deliverables: data.deliverables || [],
+        tools_recommended: data.tools_recommended || [],
+        time_estimate: data.time_estimate || "Varies",
+        example_challenges: data.example_challenges || [],
+        skill_level: data.skill_level?.toLowerCase() || "intermediate",
+        project_type: data.project_type || "UX",
+        platform: data.platform || "Web",
+        duration: data.duration?.toLowerCase().replace(/\s+/g, "-") || "medium",
+        market_relevance: data.market_relevance,
+      };
+
+      setGeneratedProject(project);
 
       toast({
         title: "Project Generated!",
-        description: "Your camp project is ready. Time to get creative!",
+        description: "Your AI-crafted project is ready. Time to get creative!",
       });
     } catch (error) {
       console.error("Error generating project:", error);
@@ -294,7 +301,11 @@ const Projects = () => {
                         <Badge variant="outline">{generatedProject.platform}</Badge>
                         <Badge variant="secondary" className="flex items-center gap-1">
                           <DurationIcon className="w-3 h-3" />
-                          {generatedProject.duration.replace("-", " ")}
+                          {generatedProject.duration.replace(/-/g, " ")}
+                        </Badge>
+                        <Badge className="bg-gradient-to-r from-primary to-accent text-primary-foreground flex items-center gap-1">
+                          <Sparkles className="w-3 h-3" />
+                          AI Generated
                         </Badge>
                       </div>
                       <CardTitle className="text-2xl md:text-3xl text-foreground">
@@ -369,6 +380,16 @@ const Projects = () => {
                           ))}
                         </ul>
                       </div>
+
+                      {/* Market Relevance */}
+                      {generatedProject.market_relevance && (
+                        <div className="p-4 rounded-lg bg-primary/10 border border-primary/20">
+                          <p className="text-sm text-foreground">
+                            <span className="font-medium">💼 Why this matters: </span>
+                            {generatedProject.market_relevance}
+                          </p>
+                        </div>
+                      )}
 
                       {/* Regenerate */}
                       <div className="pt-4 border-t border-border flex justify-center">

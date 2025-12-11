@@ -21,20 +21,49 @@ export const useTodaysChallenge = () => {
   useEffect(() => {
     const fetchTodaysChallenge = async () => {
       try {
+        // First, try to get from database (cached challenge)
         const today = new Date().toISOString().split('T')[0];
         
-        const { data, error: fetchError } = await supabase
+        const { data: existingChallenge, error: fetchError } = await supabase
           .from('challenges')
           .select('*')
           .eq('challenge_date', today)
           .maybeSingle();
 
         if (fetchError) {
-          setError(fetchError.message);
-        } else {
-          setChallenge(data);
+          console.error('Database fetch error:', fetchError);
         }
+
+        if (existingChallenge) {
+          setChallenge(existingChallenge);
+          setLoading(false);
+          return;
+        }
+
+        // If no challenge in DB, generate one with AI
+        console.log('No challenge found for today, generating with AI...');
+        
+        const { data, error: invokeError } = await supabase.functions.invoke('generate-challenge', {
+          body: {}
+        });
+
+        if (invokeError) {
+          console.error('AI generation error:', invokeError);
+          setError('Failed to generate today\'s challenge');
+          setLoading(false);
+          return;
+        }
+
+        if (data?.error) {
+          console.error('AI response error:', data.error);
+          setError(data.error);
+          setLoading(false);
+          return;
+        }
+
+        setChallenge(data);
       } catch (err) {
+        console.error('Unexpected error:', err);
         setError('Failed to fetch today\'s challenge');
       } finally {
         setLoading(false);
@@ -44,5 +73,35 @@ export const useTodaysChallenge = () => {
     fetchTodaysChallenge();
   }, []);
 
-  return { challenge, loading, error };
+  const regenerateChallenge = async (category?: string, difficulty?: string) => {
+    setLoading(true);
+    setError(null);
+    
+    try {
+      const { data, error: invokeError } = await supabase.functions.invoke('generate-challenge', {
+        body: { category, difficulty }
+      });
+
+      if (invokeError) {
+        console.error('AI generation error:', invokeError);
+        setError('Failed to generate challenge');
+        return;
+      }
+
+      if (data?.error) {
+        console.error('AI response error:', data.error);
+        setError(data.error);
+        return;
+      }
+
+      setChallenge(data);
+    } catch (err) {
+      console.error('Unexpected error:', err);
+      setError('Failed to generate challenge');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return { challenge, loading, error, regenerateChallenge };
 };
