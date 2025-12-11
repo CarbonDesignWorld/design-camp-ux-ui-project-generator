@@ -141,15 +141,11 @@ const CampPath = () => {
               </div>
             </div>
 
-            {/* CTAs */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
+            {/* CTA */}
+            <div className="flex justify-center pt-4">
               <Button variant="camp" size="xl">
                 <Sparkles className="w-5 h-5" />
                 Customize My Camp Track
-              </Button>
-              <Button variant="pine" size="lg">
-                <Map className="w-5 h-5" />
-                Create My Map
               </Button>
             </div>
           </div>
