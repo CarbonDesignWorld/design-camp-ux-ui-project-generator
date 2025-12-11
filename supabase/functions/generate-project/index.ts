@@ -18,17 +18,15 @@ serve(async (req) => {
       throw new Error("LOVABLE_API_KEY is not configured");
     }
 
-    const systemPrompt = `You are an expert UX/UI career coach and project generator for "Design Camp". Your role is to create personalized portfolio project prompts that help designers stand out in the competitive job market.
+    const systemPrompt = `You are an expert UX/UI career coach for "Design Camp". Generate concise, structured portfolio project prompts that are scannable and actionable.
 
-Your projects should:
-- Be realistic and portfolio-worthy
-- Include specific business context and user personas
-- Focus on skills employers are actively seeking
-- Provide clear deliverables and success criteria
-- Include creative constraints that encourage innovative solutions
-- Reference current design trends and best practices`;
+Keep all content SHORT and CLEAR:
+- Background: 2-3 sentences max
+- Deliverables: Clear bullet points
+- Constraints: 2-3 creative limitations
+- Challenges: Key problems to solve`;
 
-    const userPrompt = `Generate a unique, personalized portfolio project for a UX/UI designer.
+    const userPrompt = `Generate a unique portfolio project for a UX/UI designer.
 
 Filters:
 - Skill Level: ${skillLevel || 'Intermediate'}
@@ -38,20 +36,21 @@ Filters:
 
 Respond with a JSON object containing:
 {
-  "title": "A compelling project title that would look great on a portfolio (max 60 chars)",
-  "description": "A detailed project brief including business context, target users, and the problem to solve (2-3 paragraphs)",
+  "title": "Compelling project title (max 50 chars)",
+  "background_context": "2-3 sentences: fictional company name, their business, the problem to solve",
   "skill_level": "Beginner | Intermediate | Advanced",
   "project_type": "Landing Page | Mobile App | Dashboard | E-commerce | SaaS | Portfolio Piece",
   "platform": "Web | Mobile | Cross-platform",
   "duration": "Quick (2-3 days) | Medium (1-2 weeks) | Extended (3-4 weeks)",
-  "time_estimate": "Specific hours estimate like '8-12 hours'",
-  "deliverables": ["4-6 specific deliverables like 'User flow diagram', 'High-fidelity mockups for 5 key screens'"],
-  "tools_recommended": ["3-4 recommended tools like 'Figma', 'FigJam', 'Maze'"],
-  "example_challenges": ["3-4 specific design challenges within this project to consider"],
-  "market_relevance": "A sentence about why this project type is valuable for the current job market"
+  "time_estimate": "Specific hours like '8-12 hours'",
+  "deliverables": ["4-5 specific deliverables as short bullet points"],
+  "constraints": ["2-3 creative constraints to guide the design"],
+  "challenges": ["3-4 key design challenges to consider"],
+  "tools_recommended": ["3-4 recommended tools"],
+  "market_relevance": "One sentence on why this project is valuable for the job market"
 }
 
-Make it specific, creative, and immediately actionable. Include a fictional but realistic company/brand context.`;
+Be specific and actionable. Use a realistic fictional brand context.`;
 
     console.log('Generating project with Lovable AI...');
     

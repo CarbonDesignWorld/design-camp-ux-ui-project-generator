@@ -20,14 +20,13 @@ serve(async (req) => {
 
     const today = new Date().toISOString().split('T')[0];
     
-    const systemPrompt = `You are a creative UX/UI design challenge generator for "Design Camp" - a platform helping designers build portfolio-worthy projects. Generate engaging, practical design challenges that help designers improve their skills and stand out in the job market.
+    const systemPrompt = `You are a creative UX/UI design challenge generator for "Design Camp". Generate concise, structured design challenges that are scannable and actionable.
 
-Your challenges should:
-- Be completable in 1-4 hours
-- Focus on real-world, portfolio-worthy outcomes
-- Include specific constraints to spark creativity
-- Be relevant to current design trends and job market needs
-- Encourage both visual design and UX thinking`;
+Keep all content SHORT and CLEAR:
+- Background: 1-2 sentences max
+- Task: Clear, specific deliverable
+- Constraints: 2-3 bullet points
+- Bonus: One optional stretch goal`;
 
     const userPrompt = `Generate a unique daily design challenge for ${today}.
 
@@ -36,16 +35,18 @@ ${difficulty ? `Difficulty level: ${difficulty}` : 'Difficulty: Intermediate'}
 
 Respond with a JSON object containing:
 {
-  "title": "A catchy, inspiring challenge title (max 60 chars)",
-  "description": "A brief 1-2 sentence hook (max 150 chars)",
-  "full_description": "Detailed challenge brief with context, goals, and specific requirements (2-3 paragraphs)",
+  "title": "Catchy challenge title (max 50 chars)",
+  "description": "One sentence hook (max 100 chars)",
+  "background_context": "1-2 sentences of real-world context about the business/user problem",
+  "challenge_task": "Clear, specific task/deliverable in 1-2 sentences",
+  "constraints": ["2-3 short creative constraints as bullet points"],
+  "bonus_challenge": "One optional stretch goal for extra difficulty",
   "category": "UI Design | UX Design | Visual Design | Mobile Design | Web Design",
   "difficulty": "Beginner | Intermediate | Advanced",
-  "time_estimate": "1-2 hours | 2-3 hours | 3-4 hours",
-  "example_outputs": ["3-4 specific deliverable suggestions"]
+  "time_estimate": "1-2 hours | 2-3 hours | 3-4 hours"
 }
 
-Make it creative, specific, and inspiring. Include real-world context like designing for a specific type of business or solving a particular user problem.`;
+Be specific and actionable. Include a fictional but realistic business context.`;
 
     console.log('Generating challenge with Lovable AI...');
     

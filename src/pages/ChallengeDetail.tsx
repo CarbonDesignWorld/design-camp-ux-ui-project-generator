@@ -13,6 +13,10 @@ interface Challenge {
   title: string;
   description: string;
   full_description: string | null;
+  background_context?: string;
+  challenge_task?: string;
+  constraints?: string[];
+  bonus_challenge?: string;
   difficulty: "Beginner" | "Intermediate" | "Advanced";
   category: string;
   time_estimate: string | null;
@@ -201,52 +205,65 @@ const ChallengeDetail = () => {
         <div className="grid md:grid-cols-3 gap-8">
           {/* Challenge Details */}
           <div className="md:col-span-2 space-y-6">
-            <div className="bg-card rounded-xl border p-6">
-              <h2 className="font-display font-bold text-xl mb-4">Challenge Brief</h2>
-              <p className="text-muted-foreground mb-6">{challenge.description}</p>
-              
-              {challenge.full_description && (
-                <div className="prose prose-sm max-w-none text-foreground">
-                  {challenge.full_description.split("\n").map((paragraph, index) => {
-                    if (paragraph.startsWith("**") && paragraph.endsWith("**")) {
-                      return (
-                        <h3 key={index} className="font-semibold text-foreground mt-4 mb-2">
-                          {paragraph.replace(/\*\*/g, "")}
-                        </h3>
-                      );
-                    }
-                    if (paragraph.startsWith("- ")) {
-                      return (
-                        <li key={index} className="text-muted-foreground ml-4">
-                          {paragraph.substring(2)}
-                        </li>
-                      );
-                    }
-                    if (paragraph.trim()) {
-                      return (
-                        <p key={index} className="text-muted-foreground mb-2">
-                          {paragraph}
-                        </p>
-                      );
-                    }
-                    return null;
-                  })}
-                </div>
-              )}
-            </div>
-
-            {/* Example Outputs */}
-            {challenge.example_outputs && challenge.example_outputs.length > 0 && (
+            {/* Background Context */}
+            {challenge.background_context && (
               <div className="bg-card rounded-xl border p-6">
-                <h2 className="font-display font-bold text-xl mb-4">Example Outputs</h2>
-                <div className="grid grid-cols-2 gap-4">
-                  {challenge.example_outputs.map((url, index) => (
-                    <img
-                      key={index}
-                      src={url}
-                      alt={`Example ${index + 1}`}
-                      className="rounded-lg border object-cover aspect-video"
-                    />
+                <h2 className="font-display font-bold text-lg mb-3 flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-primary" />
+                  Background
+                </h2>
+                <p className="text-muted-foreground">{challenge.background_context}</p>
+              </div>
+            )}
+
+            {/* Challenge Task */}
+            {challenge.challenge_task && (
+              <div className="bg-card rounded-xl border p-6">
+                <h2 className="font-display font-bold text-lg mb-3 flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-secondary" />
+                  Your Task
+                </h2>
+                <p className="text-foreground font-medium">{challenge.challenge_task}</p>
+              </div>
+            )}
+
+            {/* Constraints */}
+            {challenge.constraints && challenge.constraints.length > 0 && (
+              <div className="bg-card rounded-xl border p-6">
+                <h2 className="font-display font-bold text-lg mb-3 flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-info" />
+                  Constraints
+                </h2>
+                <ul className="space-y-2">
+                  {challenge.constraints.map((constraint, index) => (
+                    <li key={index} className="flex items-start gap-2 text-muted-foreground">
+                      <span className="text-info mt-1">•</span>
+                      {constraint}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {/* Bonus Challenge */}
+            {challenge.bonus_challenge && (
+              <div className="bg-secondary/10 rounded-xl border border-secondary/20 p-6">
+                <h2 className="font-display font-bold text-lg mb-3 flex items-center gap-2">
+                  <Zap className="w-4 h-4 text-secondary" />
+                  Bonus Challenge
+                </h2>
+                <p className="text-muted-foreground">{challenge.bonus_challenge}</p>
+              </div>
+            )}
+
+            {/* Legacy full_description fallback */}
+            {!challenge.background_context && challenge.full_description && (
+              <div className="bg-card rounded-xl border p-6">
+                <h2 className="font-display font-bold text-xl mb-4">Challenge Brief</h2>
+                <p className="text-muted-foreground mb-4">{challenge.description}</p>
+                <div className="prose prose-sm max-w-none text-foreground">
+                  {challenge.full_description.split("\n").filter(p => p.trim()).map((paragraph, index) => (
+                    <p key={index} className="text-muted-foreground mb-2">{paragraph}</p>
                   ))}
                 </div>
               </div>
@@ -268,3 +285,4 @@ const ChallengeDetail = () => {
 };
 
 export default ChallengeDetail;
+
