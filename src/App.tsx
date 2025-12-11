@@ -9,7 +9,7 @@ import { AuthProvider } from "@/hooks/useAuth";
 import Index from "./pages/Index";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
-import Challenges from "./pages/Challenges";
+import TodayChallenges from "./pages/TodayChallenges";
 import ChallengeDetail from "./pages/ChallengeDetail";
 import Community from "./pages/Community";
 import Leaderboard from "./pages/Leaderboard";
@@ -31,7 +31,7 @@ const App = () => (
               <Route path="/" element={<Index />} />
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
-              <Route path="/challenges" element={<Challenges />} />
+              <Route path="/challenges/today" element={<TodayChallenges />} />
               <Route path="/challenge/:id" element={<ChallengeDetail />} />
               <Route path="/community" element={<Community />} />
               <Route path="/leaderboard" element={<Leaderboard />} />

@@ -124,9 +124,9 @@ const TodaysChallenge = () => {
                 <Flame className="w-5 h-5" />
                 Join Today's Challenge
               </Button>
-              <Button variant="pine" size="lg" onClick={() => navigate("/challenges")}>
+              <Button variant="pine" size="lg" onClick={() => navigate("/challenges/today")}>
                 <History className="w-5 h-5" />
-                View Past Challenges
+                View All Challenges
               </Button>
               <Button variant="outline" size="lg" onClick={handleSubmitWork}>
                 <Upload className="w-5 h-5" />
