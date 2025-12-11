@@ -5,12 +5,16 @@ export interface TodaysChallenge {
   id: string;
   title: string;
   description: string;
-  full_description: string | null;
+  full_description?: string | null;
+  background_context?: string;
+  challenge_task?: string;
+  constraints?: string[];
+  bonus_challenge?: string;
   category: string;
   difficulty: string;
   time_estimate: string | null;
   challenge_date: string;
-  example_outputs: string[] | null;
+  example_outputs?: string[] | null;
 }
 
 export const useTodaysChallenge = () => {

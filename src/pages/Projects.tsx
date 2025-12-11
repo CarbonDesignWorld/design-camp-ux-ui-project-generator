@@ -30,11 +30,14 @@ import {
 interface ProjectTemplate {
   id: string;
   title: string;
-  description: string;
+  background_context?: string;
+  description?: string;
   deliverables: string[];
+  constraints?: string[];
+  challenges?: string[];
   tools_recommended: string[];
   time_estimate: string;
-  example_challenges: string[];
+  example_challenges?: string[];
   skill_level: string;
   project_type: string;
   platform: string;
@@ -123,8 +126,11 @@ const Projects = () => {
       const project: ProjectTemplate = {
         id: data.id,
         title: data.title,
+        background_context: data.background_context,
         description: data.description,
         deliverables: data.deliverables || [],
+        constraints: data.constraints || [],
+        challenges: data.challenges || [],
         tools_recommended: data.tools_recommended || [],
         time_estimate: data.time_estimate || "Varies",
         example_challenges: data.example_challenges || [],
@@ -313,9 +319,21 @@ const Projects = () => {
                       </CardTitle>
                     </CardHeader>
                     <CardContent className="space-y-6">
-                      <p className="text-muted-foreground text-lg">
-                        {generatedProject.description}
-                      </p>
+                      {/* Background Context */}
+                      {generatedProject.background_context && (
+                        <div className="p-4 rounded-lg bg-muted/50">
+                          <h3 className="font-semibold text-foreground flex items-center gap-2 mb-2">
+                            <span className="w-2 h-2 rounded-full bg-primary" />
+                            Background
+                          </h3>
+                          <p className="text-muted-foreground">{generatedProject.background_context}</p>
+                        </div>
+                      )}
+
+                      {/* Legacy description fallback */}
+                      {!generatedProject.background_context && generatedProject.description && (
+                        <p className="text-muted-foreground">{generatedProject.description}</p>
+                      )}
 
                       <div className="grid md:grid-cols-2 gap-6">
                         {/* Deliverables */}
@@ -326,60 +344,84 @@ const Projects = () => {
                           </h3>
                           <ul className="space-y-2">
                             {generatedProject.deliverables.map((item, i) => (
-                              <li
-                                key={i}
-                                className="flex items-start gap-2 text-muted-foreground"
-                              >
-                                <span className="w-1.5 h-1.5 rounded-full bg-primary mt-2 shrink-0" />
+                              <li key={i} className="flex items-start gap-2 text-muted-foreground text-sm">
+                                <span className="w-1.5 h-1.5 rounded-full bg-primary mt-1.5 shrink-0" />
                                 {item}
                               </li>
                             ))}
                           </ul>
                         </div>
 
-                        {/* Tools */}
-                        <div className="space-y-3">
-                          <h3 className="font-semibold text-foreground flex items-center gap-2">
-                            <Wrench className="w-4 h-4 text-primary" />
-                            Recommended Tools
-                          </h3>
-                          <div className="flex flex-wrap gap-2">
+                        {/* Constraints */}
+                        {generatedProject.constraints && generatedProject.constraints.length > 0 && (
+                          <div className="space-y-3">
+                            <h3 className="font-semibold text-foreground flex items-center gap-2">
+                              <AlertTriangle className="w-4 h-4 text-info" />
+                              Constraints
+                            </h3>
+                            <ul className="space-y-2">
+                              {generatedProject.constraints.map((item, i) => (
+                                <li key={i} className="flex items-start gap-2 text-muted-foreground text-sm">
+                                  <span className="w-1.5 h-1.5 rounded-full bg-info mt-1.5 shrink-0" />
+                                  {item}
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Tools & Time */}
+                      <div className="flex flex-wrap items-center gap-4 p-4 rounded-lg bg-secondary/30">
+                        <div className="flex items-center gap-2">
+                          <Clock className="w-4 h-4 text-primary" />
+                          <span className="text-sm font-medium text-foreground">{generatedProject.time_estimate}</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Wrench className="w-4 h-4 text-primary" />
+                          <div className="flex flex-wrap gap-1">
                             {generatedProject.tools_recommended.map((tool, i) => (
-                              <Badge key={i} variant="secondary">
-                                {tool}
-                              </Badge>
+                              <Badge key={i} variant="secondary" className="text-xs">{tool}</Badge>
                             ))}
                           </div>
                         </div>
                       </div>
 
-                      {/* Time Estimate */}
-                      <div className="flex items-center gap-2 p-4 rounded-lg bg-secondary/30">
-                        <Clock className="w-5 h-5 text-primary" />
-                        <span className="font-medium text-foreground">Time Estimate:</span>
-                        <span className="text-muted-foreground">
-                          {generatedProject.time_estimate}
-                        </span>
-                      </div>
-
                       {/* Challenges */}
-                      <div className="space-y-3">
-                        <h3 className="font-semibold text-foreground flex items-center gap-2">
-                          <AlertTriangle className="w-4 h-4 text-accent" />
-                          Constraints & Challenges
-                        </h3>
-                        <ul className="space-y-2">
-                          {generatedProject.example_challenges.map((challenge, i) => (
-                            <li
-                              key={i}
-                              className="flex items-start gap-2 text-muted-foreground"
-                            >
-                              <span className="w-1.5 h-1.5 rounded-full bg-accent mt-2 shrink-0" />
-                              {challenge}
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
+                      {generatedProject.challenges && generatedProject.challenges.length > 0 && (
+                        <div className="space-y-3">
+                          <h3 className="font-semibold text-foreground flex items-center gap-2">
+                            <Zap className="w-4 h-4 text-accent" />
+                            Key Challenges
+                          </h3>
+                          <ul className="space-y-2">
+                            {generatedProject.challenges.map((challenge, i) => (
+                              <li key={i} className="flex items-start gap-2 text-muted-foreground text-sm">
+                                <span className="w-1.5 h-1.5 rounded-full bg-accent mt-1.5 shrink-0" />
+                                {challenge}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+
+                      {/* Legacy example_challenges fallback */}
+                      {!generatedProject.challenges?.length && generatedProject.example_challenges && generatedProject.example_challenges.length > 0 && (
+                        <div className="space-y-3">
+                          <h3 className="font-semibold text-foreground flex items-center gap-2">
+                            <Zap className="w-4 h-4 text-accent" />
+                            Key Challenges
+                          </h3>
+                          <ul className="space-y-2">
+                            {generatedProject.example_challenges.map((challenge, i) => (
+                              <li key={i} className="flex items-start gap-2 text-muted-foreground text-sm">
+                                <span className="w-1.5 h-1.5 rounded-full bg-accent mt-1.5 shrink-0" />
+                                {challenge}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
 
                       {/* Market Relevance */}
                       {generatedProject.market_relevance && (
