@@ -1,9 +1,8 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Sun, Clock, Flame, Star, Zap, History, Upload } from "lucide-react";
+import { Sun, Clock, Flame, Star, Zap } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useAuth } from "@/hooks/useAuth";
 import { useTodaysChallenge } from "@/hooks/useTodaysChallenge";
 
 const difficulties = [
@@ -14,7 +13,6 @@ const difficulties = [
 
 const TodaysChallenge = () => {
   const [timeLeft, setTimeLeft] = useState({ hours: 0, minutes: 0, seconds: 0 });
-  const { user } = useAuth();
   const navigate = useNavigate();
   const { challenge, loading } = useTodaysChallenge();
 
@@ -39,13 +37,6 @@ const TodaysChallenge = () => {
     return () => clearInterval(timer);
   }, []);
 
-  const handleSubmitWork = () => {
-    if (!user) {
-      navigate("/login", { state: { from: "/" } });
-    } else {
-      navigate("/challenges/today");
-    }
-  };
 
   const selectedDiff = challenge ? difficulties.find(d => d.id === challenge.difficulty) : null;
 
@@ -130,19 +121,11 @@ const TodaysChallenge = () => {
               </span>
             </div>
 
-            {/* CTAs */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            {/* CTA */}
+            <div className="flex justify-center">
               <Button variant="camp" size="xl" onClick={() => navigate("/challenges/today")}>
                 <Flame className="w-5 h-5" />
                 Join Today's Challenge
-              </Button>
-              <Button variant="pine" size="lg" onClick={() => navigate("/challenges/today")}>
-                <History className="w-5 h-5" />
-                View All Challenges
-              </Button>
-              <Button variant="outline" size="lg" onClick={handleSubmitWork}>
-                <Upload className="w-5 h-5" />
-                Submit My Work
               </Button>
             </div>
           </div>
