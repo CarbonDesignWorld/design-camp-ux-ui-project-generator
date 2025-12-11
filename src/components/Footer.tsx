@@ -1,10 +1,67 @@
-import { Tent, Twitter, Instagram, Linkedin, Github, Mail, Send } from "lucide-react";
+import { Tent, Twitter, Instagram, Linkedin, Github, Mail, Send, Bell } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 
 const Footer = () => {
+  const { toast } = useToast();
   const [email, setEmail] = useState("");
+  const [challengeReminders, setChallengeReminders] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleSubscribe = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!email || !email.includes("@")) {
+      toast({
+        title: "Invalid email",
+        description: "Please enter a valid email address.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setIsLoading(true);
+    
+    try {
+      const { error } = await supabase.from("newsletter_signups").insert({
+        email: email.toLowerCase().trim(),
+        challenge_reminders: challengeReminders,
+      });
+
+      if (error) {
+        if (error.code === "23505") {
+          toast({
+            title: "Already subscribed!",
+            description: "This email is already on our list.",
+          });
+        } else {
+          throw error;
+        }
+      } else {
+        toast({
+          title: "You're subscribed to Camp Dispatch!",
+          description: challengeReminders 
+            ? "You'll also get daily challenge reminders." 
+            : "Welcome to the community!",
+        });
+        setEmail("");
+        setChallengeReminders(false);
+      }
+    } catch (error) {
+      console.error("Newsletter signup error:", error);
+      toast({
+        title: "Signup failed",
+        description: "Please try again later.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <footer className="bg-secondary text-secondary-foreground">
@@ -19,19 +76,46 @@ const Footer = () => {
             <p className="text-secondary-foreground/80 mb-6">
               Daily prompts, design tips, and community highlights delivered to your inbox.
             </p>
-            <div className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
-              <input
-                type="email"
-                placeholder="your@email.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="flex-1 px-4 py-3 rounded-full bg-secondary-foreground/10 border border-secondary-foreground/20 text-secondary-foreground placeholder:text-secondary-foreground/50 focus:outline-none focus:border-primary"
-              />
-              <Button variant="camp" className="rounded-full">
-                <Send className="w-4 h-4" />
-                Subscribe
-              </Button>
-            </div>
+            <form onSubmit={handleSubscribe} className="space-y-4">
+              <div className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+                <input
+                  type="email"
+                  placeholder="your@email.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="flex-1 px-4 py-3 rounded-full bg-secondary-foreground/10 border border-secondary-foreground/20 text-secondary-foreground placeholder:text-secondary-foreground/50 focus:outline-none focus:border-primary"
+                  disabled={isLoading}
+                />
+                <Button 
+                  type="submit" 
+                  variant="camp" 
+                  className="rounded-full"
+                  disabled={isLoading}
+                >
+                  {isLoading ? (
+                    <div className="w-4 h-4 border-2 border-primary-foreground border-t-transparent rounded-full animate-spin" />
+                  ) : (
+                    <Send className="w-4 h-4" />
+                  )}
+                  {isLoading ? "Subscribing..." : "Subscribe"}
+                </Button>
+              </div>
+              <div className="flex items-center justify-center gap-2">
+                <Checkbox
+                  id="challenge-reminders"
+                  checked={challengeReminders}
+                  onCheckedChange={(checked) => setChallengeReminders(checked === true)}
+                  className="border-secondary-foreground/40 data-[state=checked]:bg-primary data-[state=checked]:border-primary"
+                />
+                <label
+                  htmlFor="challenge-reminders"
+                  className="text-sm text-secondary-foreground/80 cursor-pointer flex items-center gap-1"
+                >
+                  <Bell className="w-3 h-3" />
+                  Send me daily challenge reminders
+                </label>
+              </div>
+            </form>
           </div>
         </div>
       </div>
