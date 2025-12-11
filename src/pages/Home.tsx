@@ -3,7 +3,6 @@ import HeroSection from "@/components/HeroSection";
 import HowCampWorks from "@/components/HowCampWorks";
 import TodaysChallenge from "@/components/TodaysChallenge";
 import CreateProject from "@/components/CreateProject";
-import CampPath from "@/components/CampPath";
 import CampfireCommunity from "@/components/CampfireCommunity";
 import ProgressRewards from "@/components/ProgressRewards";
 import WhyJoinCamp from "@/components/WhyJoinCamp";
@@ -18,7 +17,6 @@ const Index = () => {
       <HowCampWorks />
       <TodaysChallenge />
       <CreateProject />
-      <CampPath />
       <CampfireCommunity />
       <ProgressRewards />
       <WhyJoinCamp />
