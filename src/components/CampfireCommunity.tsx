@@ -133,10 +133,10 @@ const CampfireCommunity = () => {
         </div>
 
         {/* CTA */}
-        <div className="text-center">
-          <Link to="/community">
-            <Button variant="camp" size="xl">
-              <Users className="w-5 h-5" />
+        <div className="flex justify-center px-4 sm:px-0">
+          <Link to="/community" className="w-full max-w-xs sm:w-auto">
+            <Button variant="camp" size="lg" className="w-full sm:w-auto">
+              <Users className="w-4 h-4 sm:w-5 sm:h-5" />
               Join the Campfire Chat
             </Button>
           </Link>

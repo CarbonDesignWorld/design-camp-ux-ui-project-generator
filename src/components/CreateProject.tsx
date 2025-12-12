@@ -40,10 +40,10 @@ const CreateProject = () => {
               Use our project generator to get a customized project prompt with deliverables, 
               tools, and creative constraints.
             </p>
-            <div className="flex justify-center">
-              <Link to="/projects">
+            <div className="flex justify-center px-2 sm:px-0">
+              <Link to="/projects" className="w-full max-w-xs sm:w-auto">
                 <Button variant="camp" size="lg" className="w-full sm:w-auto">
-                  <Sparkles className="w-5 h-5" />
+                  <Sparkles className="w-4 h-4 sm:w-5 sm:h-5" />
                   Generate a Camp Project
                 </Button>
               </Link>

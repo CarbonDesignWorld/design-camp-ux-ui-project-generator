@@ -124,9 +124,9 @@ const TodaysChallenge = () => {
             </div>
 
             {/* CTA */}
-            <div className="flex justify-center">
-              <Button variant="camp" size="lg" className="w-full sm:w-auto" onClick={() => navigate("/challenges/today")}>
-                <Flame className="w-5 h-5" />
+            <div className="flex justify-center px-2 sm:px-0">
+              <Button variant="camp" size="lg" className="w-full max-w-xs sm:w-auto sm:max-w-none" onClick={() => navigate("/challenges/today")}>
+                <Flame className="w-4 h-4 sm:w-5 sm:h-5" />
                 Join Today's Challenge
               </Button>
             </div>
