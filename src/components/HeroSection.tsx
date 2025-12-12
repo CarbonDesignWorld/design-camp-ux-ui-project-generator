@@ -1,6 +1,5 @@
-import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Tent, Compass, TreePine, Sun, Mountain, Star, Map } from "lucide-react";
+import { Tent, Compass, TreePine, Sun, Mountain, Star } from "lucide-react";
 
 const HeroSection = () => {
   const scrollToSection = (sectionId: string) => {
@@ -74,19 +73,13 @@ const HeroSection = () => {
 
           {/* CTA buttons */}
           <div 
-            className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-in"
+            className="flex justify-center animate-fade-in"
             style={{ animationDelay: "0.3s" }}
           >
             <Button variant="camp" size="xl" onClick={() => scrollToSection("challenge")}>
               <Sun className="w-5 h-5" />
               Start Today's Challenge
             </Button>
-            <Link to="/camp-track">
-              <Button variant="pine" size="lg">
-                <Map className="w-5 h-5" />
-                Customize My Camp Track
-              </Button>
-            </Link>
           </div>
 
           {/* Stats */}
