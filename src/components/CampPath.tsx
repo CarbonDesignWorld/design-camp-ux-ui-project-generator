@@ -1,6 +1,7 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Map, Target, Wrench, TrendingUp, Sparkles } from "lucide-react";
+import { Map, Target, Wrench, TrendingUp, Flame } from "lucide-react";
 
 const goals = [
   { id: "portfolio", label: "Build My Portfolio" },
@@ -25,6 +26,7 @@ const levels = [
 ];
 
 const CampPath = () => {
+  const navigate = useNavigate();
   const [selectedGoals, setSelectedGoals] = useState<string[]>([]);
   const [selectedTools, setSelectedTools] = useState<string[]>([]);
   const [selectedLevel, setSelectedLevel] = useState("");
@@ -142,10 +144,14 @@ const CampPath = () => {
             </div>
 
             {/* CTA */}
-            <div className="flex justify-center pt-4">
-              <Button variant="camp" size="xl">
-                <Sparkles className="w-5 h-5" />
-                Customize My Camp Track
+            <div className="flex justify-center pt-6">
+              <Button 
+                variant="camp" 
+                size="xl"
+                onClick={() => navigate("/challenges/today")}
+              >
+                <Flame className="w-5 h-5" />
+                Start Today's Challenge
               </Button>
             </div>
           </div>
