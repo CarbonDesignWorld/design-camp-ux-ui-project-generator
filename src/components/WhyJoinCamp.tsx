@@ -24,28 +24,28 @@ const benefits = [
 const WhyJoinCamp = () => {
   return (
     <section className="section-padding bg-muted">
-      <div className="container">
-        <div className="text-center mb-12">
-          <span className="camp-badge mb-4">Benefits</span>
-          <h2 className="text-3xl md:text-5xl font-bold text-foreground mt-4">
+      <div className="container px-4 sm:px-6">
+        <div className="text-center mb-8 sm:mb-12">
+          <span className="camp-badge mb-3 sm:mb-4">Benefits</span>
+          <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold text-foreground mt-3 sm:mt-4">
             Why Join Design Camp?
           </h2>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 max-w-5xl mx-auto">
           {benefits.map((benefit, index) => (
             <div
               key={benefit.title}
               className="camp-card text-center animate-fade-in"
               style={{ animationDelay: `${index * 0.15}s` }}
             >
-              <div className={`inline-flex items-center justify-center w-16 h-16 rounded-2xl ${benefit.color} mb-6`}>
-                <benefit.icon className="w-8 h-8" />
+              <div className={`inline-flex items-center justify-center w-12 h-12 sm:w-16 sm:h-16 rounded-2xl ${benefit.color} mb-4 sm:mb-6`}>
+                <benefit.icon className="w-6 h-6 sm:w-8 sm:h-8" />
               </div>
-              <h3 className="text-xl font-bold text-foreground mb-3">
+              <h3 className="text-lg sm:text-xl font-bold text-foreground mb-2 sm:mb-3">
                 {benefit.title}
               </h3>
-              <p className="text-muted-foreground">
+              <p className="text-sm sm:text-base text-muted-foreground px-2">
                 {benefit.description}
               </p>
             </div>

@@ -42,19 +42,19 @@ const TodaysChallenge = () => {
 
   return (
     <section id="challenge" className="section-padding pine-gradient">
-      <div className="container">
+      <div className="container px-4 sm:px-6">
         <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-8">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/20 text-primary-foreground mb-4">
-              <Sun className="w-5 h-5" />
-              <span className="font-semibold">Today's Camp Challenge</span>
+          <div className="text-center mb-6 sm:mb-8">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-primary/20 text-primary-foreground mb-3 sm:mb-4">
+              <Sun className="w-4 h-4 sm:w-5 sm:h-5" />
+              <span className="font-semibold text-sm sm:text-base">Today's Camp Challenge</span>
             </div>
-            <h2 className="text-3xl md:text-5xl font-bold text-secondary-foreground">
+            <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold text-secondary-foreground">
               Daily Design Adventure
             </h2>
           </div>
 
-          <div className="bg-card/95 backdrop-blur rounded-3xl p-8 md:p-12 shadow-camp-lg">
+          <div className="bg-card/95 backdrop-blur rounded-2xl sm:rounded-3xl p-5 sm:p-8 md:p-12 shadow-camp-lg">
             {loading ? (
               <div className="space-y-4">
                 <Skeleton className="h-6 w-32 mx-auto" />
@@ -64,41 +64,41 @@ const TodaysChallenge = () => {
             ) : challenge ? (
               <>
                 {/* Challenge prompt */}
-                <div className="text-center mb-8">
-                  <p className="text-sm text-muted-foreground mb-2">
+                <div className="text-center mb-6 sm:mb-8">
+                  <p className="text-xs sm:text-sm text-muted-foreground mb-2">
                     {new Date(challenge.challenge_date).toLocaleDateString('en-US', {
                       month: 'long',
                       day: 'numeric',
                       year: 'numeric'
                     })}
                   </p>
-                  <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-4">
+                  <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-3 sm:mb-4">
                     {challenge.title}
                   </h3>
-                  <p className="text-muted-foreground max-w-lg mx-auto">
+                  <p className="text-sm sm:text-base text-muted-foreground max-w-lg mx-auto px-2">
                     {challenge.description}
                   </p>
                 </div>
 
                 {/* Difficulty display */}
-                <div className="mb-8">
-                  <div className="flex flex-wrap justify-center gap-3">
+                <div className="mb-6 sm:mb-8">
+                  <div className="flex flex-wrap justify-center gap-2 sm:gap-3">
                     {difficulties.map((diff) => (
                       <div
                         key={diff.id}
-                        className={`flex items-center gap-2 px-5 py-3 rounded-full font-semibold transition-all duration-300 ${
+                        className={`flex items-center gap-1.5 sm:gap-2 px-3 py-2 sm:px-5 sm:py-3 rounded-full font-semibold text-sm sm:text-base transition-all duration-300 ${
                           challenge.difficulty === diff.id
                             ? "bg-primary text-primary-foreground shadow-camp"
                             : "bg-muted text-muted-foreground"
                         }`}
                       >
-                        <diff.icon className="w-4 h-4" />
+                        <diff.icon className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                         {diff.label}
                       </div>
                     ))}
                   </div>
                   {selectedDiff && (
-                    <p className="text-center text-sm text-muted-foreground mt-3">
+                    <p className="text-center text-xs sm:text-sm text-muted-foreground mt-2 sm:mt-3">
                       Estimated time: {challenge.time_estimate || selectedDiff.time}
                     </p>
                   )}
@@ -111,10 +111,12 @@ const TodaysChallenge = () => {
             )}
 
             {/* Countdown timer */}
-            <div className="flex items-center justify-center gap-2 mb-8 p-4 bg-muted/50 rounded-xl">
-              <Clock className="w-5 h-5 text-primary" />
-              <span className="text-muted-foreground">Next challenge in:</span>
-              <span className="font-mono font-bold text-foreground text-lg">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-2 mb-6 sm:mb-8 p-3 sm:p-4 bg-muted/50 rounded-xl">
+              <div className="flex items-center gap-2">
+                <Clock className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
+                <span className="text-sm sm:text-base text-muted-foreground">Next challenge in:</span>
+              </div>
+              <span className="font-mono font-bold text-foreground text-lg sm:text-xl">
                 {String(timeLeft.hours).padStart(2, "0")}:
                 {String(timeLeft.minutes).padStart(2, "0")}:
                 {String(timeLeft.seconds).padStart(2, "0")}
@@ -123,7 +125,7 @@ const TodaysChallenge = () => {
 
             {/* CTA */}
             <div className="flex justify-center">
-              <Button variant="camp" size="xl" onClick={() => navigate("/challenges/today")}>
+              <Button variant="camp" size="lg" className="w-full sm:w-auto" onClick={() => navigate("/challenges/today")}>
                 <Flame className="w-5 h-5" />
                 Join Today's Challenge
               </Button>
