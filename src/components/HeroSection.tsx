@@ -73,11 +73,11 @@ const HeroSection = () => {
 
           {/* CTA buttons */}
           <div 
-            className="flex justify-center animate-fade-in"
+            className="flex justify-center px-4 sm:px-0 animate-fade-in"
             style={{ animationDelay: "0.3s" }}
           >
-            <Button variant="camp" size="xl" onClick={() => scrollToSection("challenge")}>
-              <Sun className="w-5 h-5" />
+            <Button variant="camp" size="lg" className="w-full max-w-xs sm:w-auto sm:max-w-none" onClick={() => scrollToSection("challenge")}>
+              <Sun className="w-4 h-4 sm:w-5 sm:h-5" />
               Start Today's Challenge
             </Button>
           </div>
