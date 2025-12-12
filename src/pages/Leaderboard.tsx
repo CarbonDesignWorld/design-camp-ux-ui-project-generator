@@ -80,18 +80,18 @@ const Leaderboard = () => {
 
       <Header />
 
-      <main className="min-h-screen bg-surface pt-20 pb-16">
-        <div className="container px-4">
+      <main className="min-h-screen bg-surface pt-16 sm:pt-20 pb-12 sm:pb-16">
+        <div className="container px-4 sm:px-6">
           {/* Hero Section */}
-          <div className="text-center py-12">
-            <div className="inline-flex items-center gap-2 bg-accent/20 text-accent-foreground px-4 py-2 rounded-full mb-4">
-              <Trophy className="w-5 h-5 text-accent" />
-              <span className="font-medium">Camp Leaderboard</span>
+          <div className="text-center py-8 sm:py-12">
+            <div className="inline-flex items-center gap-2 bg-accent/20 text-accent-foreground px-3 py-1.5 sm:px-4 sm:py-2 rounded-full mb-3 sm:mb-4">
+              <Trophy className="w-4 h-4 sm:w-5 sm:h-5 text-accent" />
+              <span className="font-medium text-sm sm:text-base">Camp Leaderboard</span>
             </div>
-            <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-3 sm:mb-4">
               Top Campers
             </h1>
-            <p className="text-lg text-muted-foreground max-w-xl mx-auto">
+            <p className="text-sm sm:text-lg text-muted-foreground max-w-xl mx-auto px-2">
               Climb the ranks by submitting challenges and building your streak.
               Every submission earns 1 point, plus 2 bonus points per streak day!
             </p>

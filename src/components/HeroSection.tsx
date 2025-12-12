@@ -10,17 +10,17 @@ const HeroSection = () => {
   };
 
   return (
-    <section id="hero" className="relative min-h-[90vh] flex items-center justify-center overflow-hidden bg-gradient-to-b from-cream to-muted pt-16">
+    <section id="hero" className="relative min-h-[85vh] sm:min-h-[90vh] flex items-center justify-center overflow-hidden bg-gradient-to-b from-cream to-muted pt-16 sm:pt-20">
       {/* Decorative background elements */}
       <div className="absolute inset-0 overflow-hidden">
-        {/* Stars */}
-        <Star className="absolute top-24 left-1/4 w-4 h-4 text-primary/20 animate-wave" style={{ animationDelay: "0s" }} />
-        <Star className="absolute top-32 right-1/3 w-3 h-3 text-accent/30 animate-wave" style={{ animationDelay: "1s" }} />
-        <Star className="absolute top-20 right-1/4 w-5 h-5 text-primary/15 animate-wave" style={{ animationDelay: "2s" }} />
+        {/* Stars - hide some on mobile */}
+        <Star className="absolute top-20 sm:top-24 left-[15%] sm:left-1/4 w-3 h-3 sm:w-4 sm:h-4 text-primary/20 animate-wave" style={{ animationDelay: "0s" }} />
+        <Star className="hidden sm:block absolute top-32 right-1/3 w-3 h-3 text-accent/30 animate-wave" style={{ animationDelay: "1s" }} />
+        <Star className="absolute top-16 sm:top-20 right-[20%] sm:right-1/4 w-4 h-4 sm:w-5 sm:h-5 text-primary/15 animate-wave" style={{ animationDelay: "2s" }} />
         
         {/* Sun */}
-        <div className="absolute top-20 right-16 md:right-32">
-          <Sun className="w-24 h-24 md:w-32 md:h-32 text-primary/30 animate-wave" />
+        <div className="absolute top-16 sm:top-20 right-4 sm:right-16 md:right-32">
+          <Sun className="w-16 h-16 sm:w-24 sm:h-24 md:w-32 md:h-32 text-primary/30 animate-wave" />
         </div>
         
         {/* Mountains */}
@@ -31,33 +31,33 @@ const HeroSection = () => {
           </svg>
         </div>
         
-        {/* Trees */}
-        <TreePine className="absolute bottom-32 left-8 w-16 h-16 text-pine/40 animate-float" style={{ animationDelay: "0s" }} />
-        <TreePine className="absolute bottom-40 left-24 w-12 h-12 text-pine/30 animate-float" style={{ animationDelay: "1s" }} />
-        <TreePine className="absolute bottom-28 right-12 w-20 h-20 text-pine/40 animate-float" style={{ animationDelay: "2s" }} />
-        <TreePine className="absolute bottom-36 right-32 w-14 h-14 text-pine/30 animate-float" style={{ animationDelay: "0.5s" }} />
+        {/* Trees - adjust positioning and hide some on mobile */}
+        <TreePine className="absolute bottom-24 sm:bottom-32 left-4 sm:left-8 w-10 h-10 sm:w-16 sm:h-16 text-pine/40 animate-float" style={{ animationDelay: "0s" }} />
+        <TreePine className="hidden sm:block absolute bottom-40 left-24 w-12 h-12 text-pine/30 animate-float" style={{ animationDelay: "1s" }} />
+        <TreePine className="absolute bottom-20 sm:bottom-28 right-4 sm:right-12 w-12 h-12 sm:w-20 sm:h-20 text-pine/40 animate-float" style={{ animationDelay: "2s" }} />
+        <TreePine className="hidden sm:block absolute bottom-36 right-32 w-14 h-14 text-pine/30 animate-float" style={{ animationDelay: "0.5s" }} />
       </div>
 
-      <div className="container relative z-10 px-6">
+      <div className="container relative z-10 px-4 sm:px-6">
         <div className="max-w-4xl mx-auto text-center">
           {/* Camp badge */}
-          <div className="inline-flex items-center gap-2 px-5 py-2.5 mb-8 rounded-full bg-primary/10 border-2 border-primary/20 animate-fade-in">
-            <Tent className="w-5 h-5 text-primary" />
-            <span className="font-semibold text-primary">Your Daily Creative Retreat</span>
+          <div className="inline-flex items-center gap-2 px-4 py-2 sm:px-5 sm:py-2.5 mb-6 sm:mb-8 rounded-full bg-primary/10 border-2 border-primary/20 animate-fade-in">
+            <Tent className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
+            <span className="font-semibold text-primary text-sm sm:text-base">Your Daily Creative Retreat</span>
           </div>
 
           {/* Main heading */}
           <h1 
-            className="text-5xl md:text-7xl font-bold mb-6 leading-tight text-foreground animate-fade-in"
+            className="text-4xl sm:text-5xl md:text-7xl font-bold mb-4 sm:mb-6 leading-tight text-foreground animate-fade-in"
             style={{ animationDelay: "0.1s" }}
           >
             Welcome to{" "}
-            <span className="text-gradient-camp font-handwritten text-6xl md:text-8xl">Design Camp</span>
+            <span className="text-gradient-camp font-handwritten text-5xl sm:text-6xl md:text-8xl">Design Camp</span>
           </h1>
 
           {/* Subheadline */}
           <p 
-            className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-4 leading-relaxed animate-fade-in"
+            className="text-base sm:text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-3 sm:mb-4 leading-relaxed animate-fade-in px-2"
             style={{ animationDelay: "0.2s" }}
           >
             Sharpen your UX skills, build your portfolio, and join a global community of designers exploring, creating, and growing together.
@@ -65,7 +65,7 @@ const HeroSection = () => {
 
           {/* Micro-text */}
           <p 
-            className="text-sm text-primary/80 font-medium mb-10 animate-fade-in"
+            className="text-sm text-primary/80 font-medium mb-8 sm:mb-10 animate-fade-in"
             style={{ animationDelay: "0.25s" }}
           >
             Pack your sketchbook. Adventure starts now. 🏕️
@@ -84,7 +84,7 @@ const HeroSection = () => {
 
           {/* Stats */}
           <div 
-            className="grid grid-cols-3 gap-8 mt-16 pt-8 border-t border-border animate-fade-in"
+            className="grid grid-cols-3 gap-4 sm:gap-8 mt-12 sm:mt-16 pt-6 sm:pt-8 border-t border-border animate-fade-in"
             style={{ animationDelay: "0.4s" }}
           >
             {[
@@ -93,9 +93,9 @@ const HeroSection = () => {
               { value: "10k+", label: "Happy Campers", icon: Tent },
             ].map((stat) => (
               <div key={stat.label} className="text-center">
-                <stat.icon className="w-6 h-6 mx-auto mb-2 text-primary" />
-                <div className="text-3xl md:text-4xl font-bold text-foreground mb-1">{stat.value}</div>
-                <div className="text-sm text-muted-foreground">{stat.label}</div>
+                <stat.icon className="w-5 h-5 sm:w-6 sm:h-6 mx-auto mb-1 sm:mb-2 text-primary" />
+                <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-0.5 sm:mb-1">{stat.value}</div>
+                <div className="text-xs sm:text-sm text-muted-foreground">{stat.label}</div>
               </div>
             ))}
           </div>
